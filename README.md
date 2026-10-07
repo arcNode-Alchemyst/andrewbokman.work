@@ -54,20 +54,20 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
 The code lives in the GitHub repository `arcNode-Alchemyst/andrewbokman.work`. Once Cloudflare is connected to
 it, every push to `main` republishes the site. The domain `andrewbokman.work` is registered in Cloudflare.
 
-First-time setup, following Cloudflare's Pages documentation as read on 6 October 2026 (menu names may change):
+Cloudflare publishes the folder named in `wrangler.jsonc` (`./site`). The `name` in that file has to match the
+project name in the Cloudflare dashboard (`andrewbokman-work`).
 
-1. In the Cloudflare dashboard go to **Workers & Pages** → **Create application** → **Pages** →
-   **Connect to Git**.
-2. Sign in with GitHub, choose the `andrewbokman.work` repository, then **Install & Authorize** and
-   **Begin setup**.
-3. Build settings: production branch `main`; framework preset none; build command blank; build output
-   directory blank; **Root directory (advanced)** `site`. Then **Save and Deploy**. Cloudflare gives the site a
-   free `*.pages.dev` address to check.
-4. Open the project → **Custom domains** → **Set up a domain**, enter `andrewbokman.work`, and select
-   **Continue**. Cloudflare creates the DNS record and the HTTPS certificate.
-5. Add `www.andrewbokman.work` the same way, then add a redirect rule from `www` to the main address.
+First-time setup, following Cloudflare's Workers documentation as read on 6 October 2026 (menu names may change):
 
-A project connected to Git cannot be switched to drag-and-drop upload later.
+1. In the Cloudflare dashboard go to **Workers & Pages** → **Create application**, choose to import a Git
+   repository, sign in with GitHub and pick `andrewbokman.work`.
+2. On "Set up your application": keep the project name `andrewbokman-work`, leave **Build command** blank, keep
+   **Deploy command** as `npx wrangler deploy`, and leave **Protect with Cloudflare Access** off. Select
+   **Deploy**. Cloudflare gives the site a free `*.workers.dev` address to check.
+3. Open the project → **Settings** → **Domains & Routes** → **Add** → **Custom Domain**, enter
+   `andrewbokman.work`, and select **Add Custom Domain**. Cloudflare creates the DNS record and the HTTPS
+   certificate.
+4. Add `www.andrewbokman.work` the same way if you want it to work too.
 
 To publish a change after that:
 

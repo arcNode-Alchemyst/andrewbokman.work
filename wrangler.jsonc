@@ -1,0 +1,10 @@
+{
+  // Cloudflare reads this file when it publishes the site.
+  // "name" must match the project name in the Cloudflare dashboard.
+  // "assets.directory" is the folder that gets published; nothing outside it goes online.
+  "name": "andrewbokman-work",
+  "compatibility_date": "2026-10-06",
+  "assets": {
+    "directory": "./site"
+  }
+}
