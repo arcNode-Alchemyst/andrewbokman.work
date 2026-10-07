@@ -1,0 +1,8 @@
+# Working notes and large previews kept on this Mac only
+DESIGN.md
+CONTENT.md
+figma-state.json
+preview-*.png
+
+# macOS
+.DS_Store

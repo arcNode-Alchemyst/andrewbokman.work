@@ -1,0 +1,127 @@
+/*
+  Design tokens. Names match the variables in the Figma file
+  ("Andrew Bokman — Website", Foundations page), so a value changed
+  there can be changed here by the same name.
+*/
+
+:root {
+  /* Primitives: raw values. Use the semantic tokens below in components. */
+  --neutral-0: #ffffff;
+  --neutral-50: #f4f3ee;
+  --neutral-400: #a3a39c;
+  --neutral-500: #85857e;
+  --neutral-900: #17181b;
+  --neutral-950: #0b0c0e;
+  --blue-50: #edf6ff;
+  --blue-300: #7c96ff;
+  --blue-500: #0f3dff;
+  --slate-600: #526077;
+  --slate-700: #3f4c61;
+  --alpha-light-20: rgb(244 243 238 / 0.2);
+  --alpha-light-48: rgb(244 243 238 / 0.48);
+  --alpha-dark-20: rgb(11 12 14 / 0.2);
+  --alpha-dark-48: rgb(11 12 14 / 0.48);
+
+  /* Semantic colour, Dark mode (the default ground). */
+  --color-bg-ground: var(--neutral-950);
+  --color-bg-inverse: var(--neutral-50);
+  --color-bg-accent: var(--blue-500);
+  --color-bg-subtle: var(--neutral-900);
+  --color-bg-logo: var(--neutral-0);
+  --color-text-primary: var(--neutral-50);
+  --color-text-secondary: var(--neutral-400);
+  --color-text-tertiary: var(--neutral-500);
+  --color-text-inverse: var(--neutral-950);
+  --color-text-accent: var(--blue-300);
+  --color-text-on-accent: var(--neutral-0);
+  --color-border-default: var(--alpha-light-20);
+  --color-border-strong: var(--alpha-light-48);
+  --color-border-ink: var(--neutral-50);
+  --color-border-accent: var(--blue-300);
+  --color-icon-default: var(--blue-300);
+
+  /* Dimension: the same at every screen size. */
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
+  --spacing-5xl: 144px;
+  --radius-none: 0;
+  --radius-full: 999px;
+  --border-width-hairline: 1px;
+
+  /* Layout, Mobile mode (the default). Display shrinks a little on very narrow phones. */
+  --layout-margin: 20px;
+  --layout-gutter: 16px;
+  --layout-section: 64px;
+  --layout-rail: 120px;
+  --typography-display-size: clamp(36px, 11.3vw, 44px);
+  --typography-statement-size: 24px;
+  --typography-heading-size: 20px;
+  --typography-body-large-size: 17px;
+  --typography-body-size: 15px;
+  --typography-mono-size: 13px;
+  --typography-label-size: 11px;
+
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --page-max: 1440px;
+}
+
+/* Layout, Tablet mode. */
+@media (min-width: 700px) {
+  :root {
+    --layout-margin: 40px;
+    --layout-gutter: 24px;
+    --layout-section: 96px;
+    --layout-rail: 160px;
+    --typography-display-size: 80px;
+    --typography-statement-size: 32px;
+    --typography-heading-size: 24px;
+    --typography-body-large-size: 18px;
+    --typography-body-size: 16px;
+    --typography-mono-size: 13px;
+    --typography-label-size: 12px;
+  }
+}
+
+/* Layout, Desktop mode. Display scales with the window up to the 1440 design width. */
+@media (min-width: 1280px) {
+  :root {
+    --layout-margin: 60px;
+    --layout-gutter: 24px;
+    --layout-section: 120px;
+    --layout-rail: 220px;
+    --typography-display-size: clamp(96px, 7.78vw, 112px);
+    --typography-statement-size: clamp(34px, 2.78vw, 40px);
+    --typography-heading-size: 28px;
+    --typography-body-large-size: 20px;
+    --typography-body-size: 16px;
+    --typography-mono-size: 14px;
+    --typography-label-size: 12px;
+  }
+}
+
+/* Semantic colour, Light mode. Put class="theme-light" on a section to make it a light band. */
+.theme-light {
+  --color-bg-ground: var(--blue-50);
+  --color-bg-inverse: var(--neutral-950);
+  --color-bg-subtle: var(--neutral-0);
+  --color-text-primary: var(--neutral-950);
+  --color-text-secondary: var(--slate-700);
+  --color-text-tertiary: var(--slate-600);
+  --color-text-inverse: var(--neutral-50);
+  --color-text-accent: var(--blue-500);
+  --color-border-default: var(--alpha-dark-20);
+  --color-border-strong: var(--alpha-dark-48);
+  --color-border-ink: var(--neutral-950);
+  --color-border-accent: var(--blue-500);
+  --color-icon-default: var(--blue-500);
+  background: var(--color-bg-ground);
+  color: var(--color-text-primary);
+}
