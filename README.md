@@ -39,7 +39,8 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
   set it to `#ffffff` for pure white.
 - **Résumé:** replace `assets/Andrew-Bokman-Resume.pdf` with a file of the same name. The published PDF is a
   web copy without the phone number: duplicate the Light résumé frame in Figma, hide the Phone row in the
-  duplicate, export the duplicate as PDF, then delete it.
+  duplicate, export the duplicate as PDF, then delete it. The file published on 11 October 2026 was made the
+  other way round: the Phone row was removed from the full Letter export and the rows below it moved up.
 - **Projects section:** it was taken out on 6 October 2026. The block and the steps to restore it are in
   `snippets/projects-section.html`.
 - **Footer date:** edit "Updated October 2026" at the bottom of `index.html`.
@@ -47,7 +48,10 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
 ## Before publishing
 
 - Check the wording of the hero statement and section headings.
-- Le Cordon Bleu shows "Earlier" because no dates were supplied.
+- Le Cordon Bleu shows "Earlier" because no dates were supplied, and no degree type, matching the résumé.
+- Industry Analyst shows "Certification" in place of a date because the award date has not been confirmed.
+- Layer 02 (Industrial systems) lists only the systems confirmed in the Career Evidence Master: Wonderware and
+  SAP. Add a row only after a system is confirmed there.
 
 ## Publishing: GitHub to Cloudflare Pages
 

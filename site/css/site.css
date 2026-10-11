@@ -348,6 +348,11 @@ button.text-link:hover {
   pointer-events: none;
 }
 
+/* A tile that holds an icon instead of a logo (a certification, for example). */
+.logo--icon {
+  background: none;
+}
+
 .logo--photo img {
   width: 44px;
   height: 44px;
@@ -420,6 +425,7 @@ button.text-link:hover {
 .icon--graduation-cap img { left: 1.25px; top: 4.25px; }
 .icon--calendar-clock img { left: 2.25px; top: 1.25px; }
 .icon--package img { left: 2.25px; top: 1.25px; }
+.icon--flask-conical img { left: 0; top: 0; }
 
 /* Header ------------------------------------------------------------------ */
 
@@ -1125,15 +1131,10 @@ button.text-link:hover {
   color: var(--color-text-secondary);
 }
 
+/* Six groups: two rows of three from tablet width up. */
 @media (min-width: 700px) {
   .cap-groups {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1280px) {
-  .cap-groups {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 
