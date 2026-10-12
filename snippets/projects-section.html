@@ -4,7 +4,8 @@
   Contact label from 06 to 07, and add the Projects link back to the header nav and the mobile menu:
     <li><a class="nav-link" href="#projects">Projects</a></li>
     <li><a href="#projects">Projects <span class="t-body-large is-secondary" aria-hidden="true">→</span></a></li>
-  The styles for it are still in site/css/site.css under "Projects".
+  The styles for it are still in site/css/site.css under "Projects". The block uses the same
+  page-grid / section-grid / section-main structure as every other section (updated Oct 2026).
 -->
     <!-- 06 PROJECTS (light)
          To add a project: copy the <article class="project"> block, fill it in, and delete the
@@ -12,9 +13,9 @@
          that do not apply. Delete the note below the list once a real project is listed. -->
     <section class="theme-light" id="projects" aria-labelledby="projects-label">
       <div class="container">
-        <div class="rail-layout">
+        <div class="page-grid section-grid">
           <p class="section-label t-label" id="projects-label"><span class="section-label__index">06</span><span class="section-label__name">Projects</span></p>
-          <div class="section-content">
+          <div class="section-main">
             <div class="section-heading">
               <h2 class="t-statement">Building next.</h2>
               <p class="measure t-body-large is-secondary">Software, automation and infrastructure projects will be documented here as they are built: the problem, the approach and what changed.</p>

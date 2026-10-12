@@ -24,16 +24,24 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
 |---|---|
 | `index.html` | All the content, in page order. Each section starts with a comment such as `<!-- 03 EXPERIENCE -->`. |
 | `css/tokens.css` | Colours, spacing and font sizes. Change a value here and it changes everywhere. |
-| `css/site.css` | Layout and components. |
+| `css/site.css` | Layout and components. The comment at the top explains the page grid. |
 | `js/site.js` | The mobile menu, the highlighted nav link, and the highlight wipe. |
 | `assets/logos`, `assets/icons` | Logo and icon files exported from the Figma design. |
 | `assets/Andrew-Bokman-Resume.pdf` | The résumé the "Résumé" links download. |
+
+## Layout
+
+Every section sits on one 12-column page grid (`.page-grid`). The section label takes columns 1–2 and the
+content columns 3–12 from 900px wide; below that the label sits above the content. The hero figure moves beside
+the hero text from 1200px. Inside a section, components respond to the width they actually have (container
+queries), and the wide layouts split the content into equal page columns, so experience rows, system rows,
+capability groups, progression stages and contact details all start on the same column lines.
 
 ## Common edits
 
 - **New job:** in `index.html`, copy a `<details class="index-row">` block in section 03, paste it at the top of
   the list and edit the text. Put the word `open` after `class="index-row"` on the row that should start expanded,
-  and move the `Current` tag to it.
+  and move the `Current` tag to it. Wrap the first few words of each bullet in `<strong>` for the lead-in.
 - **Light or dark section:** add or remove `class="theme-light"` on a `<section>`.
 - **Colours:** edit the primitives at the top of `css/tokens.css`. `--blue-50` is the light section background;
   set it to `#ffffff` for pure white.
@@ -48,10 +56,13 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
 ## Before publishing
 
 - Check the wording of the hero statement and section headings.
-- Le Cordon Bleu shows "Earlier" because no dates were supplied, and no degree type, matching the résumé.
-- Industry Analyst shows "Certification" in place of a date because the award date has not been confirmed.
-- Layer 02 (Industrial systems) lists only the systems confirmed in the Career Evidence Master: Wonderware and
+- Le Cordon Bleu shows "Earlier" because no dates were supplied, matching the résumé.
+- Layer 03 (Industrial systems) lists only the systems confirmed in the Career Evidence Master: Wonderware and
   SAP. Add a row only after a system is confirmed there.
+- Computer science appears only as an education entry (decided October 2026). The Python, Linux, Git and Docker
+  logo files are still in `assets/logos` for when a software section returns.
+- The social preview image (`assets/andrew-bokman-social-preview.png`) still reads "Manufacturing operations /
+  industrial systems / software" and needs a new export.
 
 ## Publishing: GitHub to Cloudflare Pages
 
