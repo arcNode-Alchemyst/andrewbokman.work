@@ -349,6 +349,26 @@ button.text-link:hover {
   color: var(--color-text-inverse);
 }
 
+/* Filled button for the one main action in a group. */
+.btn--primary {
+  background: var(--color-bg-inverse);
+  color: var(--color-text-inverse);
+}
+
+.btn--primary:hover {
+  background: transparent;
+  color: var(--color-text-primary);
+}
+
+/* Quieter outline for the actions beside it. */
+.btn--secondary {
+  border-color: var(--color-border-strong);
+}
+
+.btn--secondary:hover {
+  border-color: var(--color-border-ink);
+}
+
 .tag {
   display: inline-flex;
   align-items: center;
@@ -467,6 +487,7 @@ button.text-link:hover {
 .icon--link img { left: 1.31px; top: 1.32px; }
 .icon--file-text img { left: 3.25px; top: 1.25px; }
 .icon--flask-conical img { left: 0; top: 0; }
+.icon--package img { left: 2.25px; top: 1.25px; }
 
 /* Header ------------------------------------------------------------------ */
 
@@ -628,25 +649,29 @@ button.text-link:hover {
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-md) var(--spacing-xl);
+  gap: var(--spacing-sm);
   align-items: center;
 }
 
-/* On a phone the button takes the full width and the two links share the row below. */
+.hero__actions .btn {
+  justify-content: center;
+}
+
+/* On a phone the main button takes the full width and the two others split the row
+   below it evenly, so all three edges line up with the text above. */
 @container hero-text (max-width: 479px) {
   .hero__actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--spacing-lg);
   }
 
   .hero__actions .btn {
-    grid-column: 1 / -1;
-    justify-content: center;
+    min-height: 48px;
+    padding-inline: var(--spacing-md);
   }
 
-  .hero__actions .text-link {
-    justify-self: start;
+  .hero__actions .btn--primary {
+    grid-column: 1 / -1;
   }
 }
 
@@ -1169,17 +1194,16 @@ button.text-link:hover {
   border-top: var(--border-width-hairline) solid var(--color-border-strong);
 }
 
+/* Layer label above, its scope underneath, on every width, so no header ever wraps half-way. */
 .layer__header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--spacing-2xs) var(--spacing-md);
+  display: grid;
+  gap: var(--spacing-2xs);
 }
 
 .layer__title {
   display: flex;
-  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  gap: var(--spacing-2xs) var(--spacing-sm);
 }
 
 /* Groups need about 15rem to read well, so the column count follows the width:
@@ -1196,13 +1220,42 @@ button.text-link:hover {
   align-content: start;
 }
 
+/* Icon, title and items share row tracks across a row of groups, so a title that wraps
+   to two lines pushes its neighbours' rules down with it and the rules stay level. */
+@supports (grid-template-rows: subgrid) {
+  .cap-group {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: var(--spacing-sm);
+  }
+
+  .cap-group__title {
+    align-self: end;
+  }
+}
+
 .cap-group__title {
   padding-bottom: var(--spacing-xs);
   border-bottom: var(--border-width-hairline) solid var(--color-border-strong);
 }
 
+/* Items read as compact tags that wrap, rather than one long column per group. */
 .cap-group__items {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: var(--spacing-xs);
   color: var(--color-text-secondary);
+}
+
+.cap-group__items > li {
+  padding: 5px var(--spacing-sm);
+  line-height: 1.35;
+  border: var(--border-width-hairline) solid var(--color-border-default);
+}
+
+.cap-group__items > li + li {
+  margin-top: 0;
 }
 
 @container main (min-width: 480px) {
