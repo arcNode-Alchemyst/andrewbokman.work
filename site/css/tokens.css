@@ -1,7 +1,12 @@
 /*
-  Design tokens. Names match the variables in the Figma file
+  Design tokens. Colour names match the variables in the Figma file
   ("Andrew Bokman — Website", Foundations page), so a value changed
   there can be changed here by the same name.
+
+  Layout and type sizes are fluid: each grows smoothly with the window
+  between a phone value and the 1440 desktop design value, instead of
+  jumping at breakpoints. The two page-level breakpoints are listed at
+  the bottom of this file for reference.
 */
 
 :root {
@@ -40,7 +45,7 @@
   --color-border-accent: var(--blue-300);
   --color-icon-default: var(--blue-300);
 
-  /* Dimension: the same at every screen size. */
+  /* Spacing scale: the same at every screen size. */
   --spacing-2xs: 4px;
   --spacing-xs: 8px;
   --spacing-sm: 12px;
@@ -55,56 +60,43 @@
   --radius-full: 999px;
   --border-width-hairline: 1px;
 
-  /* Layout, Mobile mode (the default). Display shrinks a little on very narrow phones. */
-  --layout-margin: 20px;
-  --layout-gutter: 16px;
-  --layout-section: 64px;
-  --layout-rail: 120px;
-  --typography-display-size: clamp(36px, 11.3vw, 44px);
-  --typography-statement-size: 24px;
-  --typography-heading-size: 20px;
-  --typography-body-large-size: 17px;
-  --typography-body-size: 15px;
-  --typography-mono-size: 13px;
-  --typography-label-size: 11px;
+  /* Vertical rhythm: the only gaps sections use between their parts. */
+  --rhythm-item: var(--spacing-xs);     /* list item to list item */
+  --rhythm-s: var(--spacing-md);        /* heading to intro, label to value */
+  --rhythm-m: var(--spacing-lg);        /* section label to heading (stacked) */
+  --rhythm-l: var(--spacing-2xl);       /* intro to main content */
+  --rhythm-xl: var(--spacing-3xl);      /* content group to content group */
+
+  /* Page grid: 12 columns. Margin, gutter and section padding are fluid. */
+  --page-max: 1440px;
+  --layout-margin: clamp(20px, 4.2vw, 60px);
+  --layout-gutter: clamp(16px, 1.7vw, 24px);
+  --layout-section: clamp(64px, 8.4vw, 120px);
+
+  /* Type sizes: phone value, fluid middle, 1440 design value. */
+  --typography-display-size: clamp(36px, max(min(11.3vw, 44px), 7.78vw), 112px);
+  --typography-statement-size: clamp(24px, 1.6vw + 17.5px, 40px);
+  --typography-heading-size: clamp(20px, 0.8vw + 16.5px, 28px);
+  --typography-body-large-size: clamp(17px, 0.3vw + 15.8px, 20px);
+  --typography-body-size: clamp(15px, 0.15vw + 14.4px, 16px);
+  --typography-mono-size: clamp(13px, 0.1vw + 12.5px, 14px);
+  --typography-label-size: clamp(11px, 0.12vw + 10.5px, 12px);
+
+  /* Reading measures. */
+  --measure-body: 68ch;
+  --measure-statement: 34ch;
 
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --page-max: 1440px;
-}
 
-/* Layout, Tablet mode. */
-@media (min-width: 700px) {
-  :root {
-    --layout-margin: 40px;
-    --layout-gutter: 24px;
-    --layout-section: 96px;
-    --layout-rail: 160px;
-    --typography-display-size: 80px;
-    --typography-statement-size: 32px;
-    --typography-heading-size: 24px;
-    --typography-body-large-size: 18px;
-    --typography-body-size: 16px;
-    --typography-mono-size: 13px;
-    --typography-label-size: 12px;
-  }
-}
-
-/* Layout, Desktop mode. Display scales with the window up to the 1440 design width. */
-@media (min-width: 1280px) {
-  :root {
-    --layout-margin: 60px;
-    --layout-gutter: 24px;
-    --layout-section: 120px;
-    --layout-rail: 220px;
-    --typography-display-size: clamp(96px, 7.78vw, 112px);
-    --typography-statement-size: clamp(34px, 2.78vw, 40px);
-    --typography-heading-size: 28px;
-    --typography-body-large-size: 20px;
-    --typography-body-size: 16px;
-    --typography-mono-size: 14px;
-    --typography-label-size: 12px;
-  }
+  /*
+    Page-level breakpoints (media queries cannot read custom properties,
+    so these values are repeated in site.css):
+      900px   section label moves into its own rail; full header navigation
+      1200px  hero figure moves beside the hero text
+    Everything inside a section responds to its own width with
+    container queries instead.
+  */
 }
 
 /* Semantic colour, Light mode. Put class="theme-light" on a section to make it a light band. */
