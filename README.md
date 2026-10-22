@@ -61,11 +61,10 @@ each plant. Every fact comes from the current résumé (General v6, October 2026
 - **Colours:** edit the primitives at the top of `css/tokens.css`. `--blue-50` is the light section background;
   set it to `#ffffff` for pure white.
 - **Résumé:** replace `assets/Andrew-Bokman-Resume.pdf` with a file of the same name. The published PDF is a
-  web copy without the phone number or town: duplicate the Light résumé frame in Figma, hide the Phone and
-  Address rows, change the Herda's and Innovative Food Processors locations from "Faribault, MN" to "MN", export
-  the duplicate as PDF, then delete it. The current file (General v6, October 2026) was made the other way
-  round: those rows were removed from the full export, the rows below them moved up, and "Faribault," was cut
-  from the two locations.
+  dark web copy of the supplied October 2026 résumé, without the Phone and Address rows. The sidebar rows
+  below them are moved up, and the Herda's and Innovative Food Processors locations read "MN". Both the
+  visible artwork and the selectable/accessibility text omit the phone number and town. Keep these
+  privacy changes when replacing the PDF; the original personal copy is unchanged.
 - **Location:** the site names no town for Andrew (decided October 2026). The footer and the two Faribault
   employers show "Minnesota" only.
 - **Role details:** the `<dl class="row-facts">` under a role's bullets is optional. Copy a `row-fact` line to
