@@ -24,22 +24,42 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
 |---|---|
 | `index.html` | All the content, in page order. Each section starts with a comment such as `<!-- 03 EXPERIENCE -->`. |
 | `css/tokens.css` | Colours, spacing and font sizes. Change a value here and it changes everywhere. |
-| `css/site.css` | Layout and components. |
-| `js/site.js` | The mobile menu, the highlighted nav link, and the highlight wipe. |
+| `css/site.css` | Layout and components. The comment at the top explains the page grid. |
+| `js/site.js` | The mobile menu, the highlighted nav link, the "Open all roles" button, opening every role before printing, and the highlight wipe. |
 | `assets/logos`, `assets/icons` | Logo and icon files exported from the Figma design. |
 | `assets/Andrew-Bokman-Resume.pdf` | The résumé the "Résumé" links download. |
+
+## Layout
+
+Every section sits on one 12-column page grid (`.page-grid`). The section label takes columns 1–2 and the
+content columns 3–12 from 900px wide; below that the label sits above the content. The "At a glance" panel moves
+beside the hero text from 1200px. Inside a section, components respond to the width they actually have
+(container queries).
+
+Experience, education, equipment and system rows share one geometry, described at the top of `css/site.css`:
+years or label, then the logo or icon against the name, then the name, then role and location. At every width
+the logos and icons end on the same line and the names, bullets, details and tags start on the same line.
+
+## Content
+
+The page is the résumé with more detail than fits on one page: every role, extra bullets and details under
+each role, an "At a glance" panel of key figures, skills by kind of work, and the equipment and processes run at
+each plant. Every fact comes from the current résumé (General v6, October 2026) or the Career Evidence Master.
 
 ## Common edits
 
 - **New job:** in `index.html`, copy a `<details class="index-row">` block in section 03, paste it at the top of
   the list and edit the text. Put the word `open` after `class="index-row"` on the row that should start expanded,
-  and move the `Current` tag to it.
+  and move the `Current` tag to it. Wrap the first few words of each bullet in `<strong>` for the lead-in.
 - **Light or dark section:** add or remove `class="theme-light"` on a `<section>`.
 - **Colours:** edit the primitives at the top of `css/tokens.css`. `--blue-50` is the light section background;
   set it to `#ffffff` for pure white.
 - **Résumé:** replace `assets/Andrew-Bokman-Resume.pdf` with a file of the same name. The published PDF is a
   web copy without the phone number: duplicate the Light résumé frame in Figma, hide the Phone row in the
-  duplicate, export the duplicate as PDF, then delete it.
+  duplicate, export the duplicate as PDF, then delete it. The current file (General v6, October 2026) was made
+  the other way round: the Phone row was removed from the full export and the rows below it moved up.
+- **Role details:** the `<dl class="row-facts">` under a role's bullets is optional. Copy a `row-fact` line to
+  add a detail, or delete the whole `dl` for a role with nothing to add.
 - **Projects section:** it was taken out on 6 October 2026. The block and the steps to restore it are in
   `snippets/projects-section.html`.
 - **Footer date:** edit "Updated October 2026" at the bottom of `index.html`.
@@ -47,7 +67,13 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
 ## Before publishing
 
 - Check the wording of the hero statement and section headings.
-- Le Cordon Bleu shows "Earlier" because no dates were supplied.
+- Le Cordon Bleu shows "Earlier" because no dates were supplied, matching the résumé.
+- "Systems and safety" lists only the systems confirmed in the Career Evidence Master: Wonderware and SAP. Add a
+  row only after a system is confirmed there.
+- The software degree appears only as an education entry (decided October 2026). The Python, Linux, Git and
+  Docker logo files are still in `assets/logos` in case a software section returns.
+- The social preview image (`assets/andrew-bokman-social-preview.png`) was updated in October 2026 to read
+  "Manufacturing Operations Specialist". The Figma file still has the older wording.
 
 ## Publishing: GitHub to Cloudflare Pages
 
