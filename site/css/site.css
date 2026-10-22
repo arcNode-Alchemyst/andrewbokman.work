@@ -15,8 +15,20 @@
                   that splits it into 10 (or 5, or 2) equal columns with the page
                   gutter lands on the same column lines as the rest of the page.
 
-  Components never use pixel widths copied from the design file; they use
-  page columns, the shared gutter and the rhythm tokens in tokens.css.
+  Rows share one geometry
+  -----------------------
+  Experience rows, education rows, equipment rows and system rows all use the
+  same ten columns once the content is 880px wide:
+
+      1–2   years, or the row's label
+      3     logo or icon, pushed to the right edge of the column so it sits
+            next to the name instead of floating in the middle
+      4–7   name and summary; bullets and details start here too
+      8–9   role and location
+      10    the +/– control
+
+  Narrower than that, every row puts the logo beside the name and lets the
+  detail run the full width underneath.
 */
 
 /* Base ------------------------------------------------------------------ */
@@ -29,6 +41,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--spacing-lg);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -68,6 +81,7 @@ h4 {
 
 p,
 li,
+dt,
 dd {
   text-wrap: pretty;
 }
@@ -119,16 +133,6 @@ button {
   top: var(--spacing-xs);
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 /* Text styles (same names as the Figma text styles) ----------------------- */
 
 .t-display {
@@ -162,10 +166,6 @@ button {
 .t-list {
   font-size: var(--typography-body-size);
   line-height: 1.5;
-}
-
-.t-list > li + li {
-  margin-top: var(--rhythm-item);
 }
 
 .t-mono {
@@ -227,7 +227,7 @@ button {
   grid-column: full;
 }
 
-/* A rule across the full page grid, above sections that follow another dark section. */
+/* A rule across the full page grid, between two dark sections. */
 .section-grid--ruled {
   border-top: var(--border-width-hairline) solid var(--color-border-default);
 }
@@ -253,6 +253,15 @@ button {
 .section-heading > .t-statement,
 .section-main > .t-statement {
   max-inline-size: var(--measure-statement);
+}
+
+/* Intro sentence with an action on the same line when there is room. */
+.section-heading__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-sm) var(--spacing-xl);
 }
 
 @media (min-width: 900px) {
@@ -336,12 +345,13 @@ button.text-link:hover {
   display: inline-flex;
   gap: var(--spacing-xs);
   align-items: center;
+  justify-content: center;
   min-height: 44px;
   padding: var(--spacing-sm) var(--spacing-lg);
   white-space: nowrap;
   border: var(--border-width-hairline) solid var(--color-border-ink);
   border-radius: var(--radius-full);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn:hover {
@@ -378,21 +388,32 @@ button.text-link:hover {
   color: var(--color-text-secondary);
 }
 
-.tag--accent {
-  border-color: var(--color-border-accent);
-  color: var(--color-text-accent);
-}
-
 .tag--solid {
   border-color: var(--color-border-accent);
   background: var(--color-bg-accent);
   color: var(--color-text-on-accent);
 }
 
-/* The accent block behind a key phrase. Once per statement. */
+/* Wrapping item tags: skills, equipment and processes. */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: var(--spacing-xs);
+  color: var(--color-text-secondary);
+}
+
+.tags > li {
+  padding: 5px var(--spacing-sm);
+  line-height: 1.35;
+  border: var(--border-width-hairline) solid var(--color-border-default);
+}
+
+/* The accent block behind a key phrase. Once per statement. The phrase never breaks,
+   so the block is always one clean rectangle. */
 .highlight {
   display: inline-block;
-  padding-inline: var(--spacing-xs);
+  white-space: nowrap;
   background: linear-gradient(var(--color-bg-accent), var(--color-bg-accent)) no-repeat left / 100% 100%;
   color: var(--color-text-on-accent);
 }
@@ -440,8 +461,12 @@ button.text-link:hover {
   background: #1a1a1a;
 }
 
-/* Marks without their own ground are masked to the same 30px optical box.
-   Per-logo offsets below are optical corrections taken from the design file. */
+/* A tile that holds an icon instead of a logo (a certification). */
+.logo--icon {
+  background: var(--color-bg-subtle);
+}
+
+/* Marks without their own ground are masked to the same 30px optical box. */
 .logo__clip {
   display: block;
   -webkit-mask-repeat: no-repeat;
@@ -477,7 +502,6 @@ button.text-link:hover {
 }
 
 .icon--shield-check img { left: 3.25px; top: 1.25px; }
-.icon--code-xml img { left: 1.25px; top: 3.25px; }
 .icon--mail img { left: 1.25px; top: 3.25px; }
 .icon--database img { left: 2.25px; top: 1.25px; }
 .icon--wrench img { left: 1.25px; top: 1.25px; }
@@ -536,7 +560,8 @@ button.text-link:hover {
 }
 
 /* Without JavaScript the menu button cannot open anything, so show the links. */
-.no-js .header__menu-button {
+.no-js .header__menu-button,
+.no-js .rows-toggle {
   display: none;
 }
 
@@ -614,8 +639,9 @@ button.text-link:hover {
 
 .hero__grid {
   row-gap: var(--rhythm-xl);
-  padding-top: var(--spacing-3xl);
-  padding-bottom: var(--spacing-4xl);
+  align-items: start;
+  padding-top: clamp(40px, 5.5vw, 80px);
+  padding-bottom: clamp(56px, 6.7vw, 96px);
 }
 
 .hero__text,
@@ -626,24 +652,31 @@ button.text-link:hover {
 
 .hero__text {
   container: hero-text / inline-size;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--rhythm-l);
+  display: grid;
+  gap: var(--spacing-2xl);
+  align-content: start;
 }
 
 .hero__identity {
   display: grid;
-  gap: var(--spacing-xl);
+}
+
+.hero__role {
+  color: var(--color-text-accent);
+}
+
+.hero__name {
+  margin-top: var(--spacing-md);
 }
 
 .hero__statement {
+  margin-top: clamp(24px, 2.2vw, 32px);
   max-inline-size: var(--measure-statement);
 }
 
-.hero__actions-group {
-  display: grid;
-  gap: var(--spacing-lg);
+.hero__summary {
+  margin-top: var(--spacing-md);
+  max-inline-size: 52ch;
 }
 
 .hero__actions {
@@ -651,10 +684,6 @@ button.text-link:hover {
   flex-wrap: wrap;
   gap: var(--spacing-sm);
   align-items: center;
-}
-
-.hero__actions .btn {
-  justify-content: center;
 }
 
 /* On a phone the main button takes the full width and the two others split the row
@@ -675,35 +704,7 @@ button.text-link:hover {
   }
 }
 
-.hero__aside {
-  container: aside / inline-size;
-}
-
-.hero__aside-grid {
-  display: grid;
-  gap: var(--spacing-lg);
-  align-content: start;
-}
-
-/* While the figure group spans the whole page grid, figure and facts sit side by side
-   on the page columns: figure on 1–5, facts on 6–12. */
-@container aside (min-width: 640px) {
-  .hero__aside-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--layout-gutter);
-    align-items: start;
-  }
-
-  .hero__aside-grid .figure {
-    grid-column: 1 / 6;
-  }
-
-  .hero__aside-grid .facts {
-    grid-column: 6 / 13;
-  }
-}
-
-/* Desktop: text on columns 1–8, figure and facts on 9–12. */
+/* Desktop: text on columns 1–8, the at-a-glance panel on 9–12, tops level. */
 @media (min-width: 1200px) {
   .hero__text {
     grid-column: 1 / 9;
@@ -714,99 +715,89 @@ button.text-link:hover {
   }
 }
 
-/* The hero figure: a drawing of the three layers, captioned like a figure in a manual. */
-.figure {
+/* At a glance: key figures on a panel with a quiet blue glow in one corner. */
+.glance {
+  container: glance / inline-size;
   display: grid;
-  gap: var(--spacing-sm);
-}
-
-.figure__art {
-  aspect-ratio: 360 / 450;
-  overflow: hidden;
-  background: var(--color-bg-subtle);
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background:
+    radial-gradient(85% 65% at 100% 0%, rgb(15 61 255 / 0.34), rgb(15 61 255 / 0) 70%),
+    var(--color-bg-subtle);
   border: var(--border-width-hairline) solid var(--color-border-default);
 }
 
-.figure__art svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.figure__caption {
+.glance__title {
   display: flex;
-  justify-content: space-between;
+  gap: var(--spacing-xs);
+  align-items: center;
+  color: var(--color-text-tertiary);
 }
 
-.fig-tick {
-  stroke: var(--color-border-strong);
+.glance__title::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-bg-accent);
+  box-shadow: 0 0 0 3px rgb(15 61 255 / 0.25);
 }
 
-.fig-guide {
-  stroke: var(--color-border-strong);
-  stroke-dasharray: 4 4;
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--spacing-lg);
 }
 
-.fig-base {
-  fill: var(--color-bg-subtle);
+/* Value first on screen, label first for screen readers (dt before dd in the source). */
+.stat {
+  display: grid;
+  gap: var(--spacing-xs);
+  align-content: start;
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-lg);
+  border-top: var(--border-width-hairline) solid var(--color-border-default);
 }
 
-.fig-top,
-.fig-side,
-.fig-line {
-  stroke: var(--color-border-ink);
-  stroke-width: 1.25;
-  stroke-linejoin: round;
+.stat__value {
+  order: -1;
+  font-size: clamp(28px, 12.5cqi, 46px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-.fig-top {
-  fill: var(--color-text-primary);
-  fill-opacity: 0.16;
+.stat__label {
+  color: var(--color-text-secondary);
+  font-size: var(--typography-body-size);
+  line-height: 1.4;
 }
 
-.fig-side {
-  fill: var(--color-text-primary);
-  fill-opacity: 0.06;
-}
+/* When the panel runs the full width (phones turned sideways, tablets, small laptops):
+   four figures in a row, and the three facts side by side underneath. */
+@container glance (min-width: 600px) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 
-.fig-plate--mid .fig-top {
-  fill-opacity: 0.1;
-}
+  .stat__value {
+    font-size: clamp(32px, 6.2cqi, 46px);
+  }
 
-.fig-plate--top .fig-top,
-.fig-plate--top .fig-side,
-.fig-plate--top .fig-line {
-  stroke: var(--color-border-accent);
-}
+  .glance .facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--spacing-lg);
+    border-top: var(--border-width-hairline) solid var(--color-border-default);
+  }
 
-.fig-plate--top .fig-top {
-  fill: var(--color-bg-accent);
-  fill-opacity: 1;
-}
-
-.fig-plate--top .fig-side {
-  fill: var(--color-bg-accent);
-  fill-opacity: 0.45;
-}
-
-.fig-index,
-.fig-name {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fig-index {
-  fill: var(--color-text-tertiary);
-}
-
-.fig-name {
-  fill: var(--color-text-secondary);
-}
-
-.fig-name--top {
-  fill: var(--color-text-accent);
+  .glance .facts .fact {
+    grid-column: auto;
+    grid-template-columns: none;
+    gap: var(--spacing-2xs);
+    padding-block: var(--spacing-md) 0;
+    border-top: 0;
+  }
 }
 
 /* Facts: label and value columns shared by every row. */
@@ -814,7 +805,6 @@ button.text-link:hover {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   column-gap: var(--spacing-xl);
-  border-bottom: var(--border-width-hairline) solid var(--color-border-default);
 }
 
 .fact {
@@ -828,6 +818,14 @@ button.text-link:hover {
 
 .fact dt {
   color: var(--color-text-tertiary);
+}
+
+/* Stacked inside the panel, the first fact needs no rule: the figures above end the group. */
+@container glance (max-width: 599.98px) {
+  .glance .facts .fact:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
 }
 
 @supports not (grid-template-columns: subgrid) {
@@ -882,6 +880,7 @@ button.text-link:hover {
 
 .stage__status {
   padding-bottom: var(--spacing-xl);
+  white-space: nowrap;
 }
 
 .stage:last-child .stage__status {
@@ -890,6 +889,7 @@ button.text-link:hover {
 
 .stage--current .stage__marker {
   background: var(--color-bg-accent);
+  box-shadow: 0 0 0 4px rgb(15 61 255 / 0.3);
 }
 
 .stage--current .stage__status {
@@ -941,6 +941,7 @@ button.text-link:hover {
   }
 
   .stage__status {
+    padding-top: var(--spacing-xs);
     padding-bottom: 0;
   }
 
@@ -980,8 +981,9 @@ button.text-link:hover {
   max-inline-size: 60ch;
 }
 
-/* Two equal columns: five page columns each beside the rail, six each when stacked. */
-@container main (min-width: 720px) {
+/* Two equal columns (five page columns each beside the rail), from the same width
+   as the skill groups, so both sections split on the same line. */
+@container main (min-width: 560px) {
   .profile__columns {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--layout-gutter);
@@ -991,12 +993,8 @@ button.text-link:hover {
 /* Index rows: experience and education -------------------------------------- */
 
 /*
-  The row head and the expanded list share one column template (--row-columns),
-  so the bullets start under the employer name without any padding arithmetic.
-  Narrow: years and the +/– control on top, logo beside the name, role below.
-  Medium: logo, name and role on one row.
-  Wide (from 880px, i.e. ten page columns): years 1–2, logo 3, employer 4–7,
-  role and location 8–9, control 10. Bullets run from column 4.
+  The row head and the expanded body share one column template (--row-columns),
+  so the bullets and details start under the employer name without padding arithmetic.
 */
 .index-list {
   --row-columns: 44px minmax(0, 1fr) auto;
@@ -1023,8 +1021,12 @@ button.text-link:hover {
   outline-offset: var(--spacing-xs);
 }
 
+.index-row > summary:hover .index-row__title {
+  color: var(--color-text-accent);
+}
+
 .index-row__head,
-.index-row__highlights {
+.index-row__body {
   display: grid;
   grid-template-columns: var(--row-columns);
   column-gap: var(--row-gap);
@@ -1034,7 +1036,7 @@ button.text-link:hover {
   grid-template-areas:
     "years years toggle"
     "logo  main  main"
-    ".     side  side";
+    "logo  side  side";
   row-gap: var(--spacing-sm);
   align-items: center;
 }
@@ -1046,6 +1048,10 @@ button.text-link:hover {
   gap: var(--spacing-sm);
   align-items: center;
   color: var(--color-text-secondary);
+}
+
+.index-row__years .t-mono {
+  white-space: nowrap;
 }
 
 .index-row .logo {
@@ -1063,6 +1069,10 @@ button.text-link:hover {
 
 .index-row__main {
   grid-area: main;
+}
+
+.index-row__title {
+  transition: color 0.15s ease;
 }
 
 .index-row__side {
@@ -1091,19 +1101,24 @@ button.text-link:hover {
   content: "\2013";
 }
 
-.index-row__highlights {
-  row-gap: var(--rhythm-item);
+.index-row__body {
+  row-gap: var(--spacing-lg);
   padding-top: var(--spacing-lg);
+}
+
+.index-row__body > * {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.index-row__highlights {
+  display: grid;
+  row-gap: var(--rhythm-item);
   color: var(--color-text-secondary);
 }
 
 .index-row__highlights > li {
-  grid-column: 1 / -1;
   max-inline-size: var(--measure-body);
-}
-
-.index-row__highlights > li + li {
-  margin-top: 0;
 }
 
 /* Lead-in: the first words of each bullet carry the point. */
@@ -1112,6 +1127,31 @@ button.text-link:hover {
   color: var(--color-text-primary);
 }
 
+/* Extra detail under the bullets: one label column shared by every row on the page. */
+.row-facts {
+  display: grid;
+}
+
+.row-fact {
+  display: grid;
+  gap: var(--spacing-2xs);
+  padding-block: var(--spacing-sm);
+  border-top: var(--border-width-hairline) solid var(--color-border-default);
+}
+
+.row-fact dt {
+  color: var(--color-text-tertiary);
+}
+
+.row-fact dd {
+  color: var(--color-text-primary);
+}
+
+.rows-toggle {
+  flex: none;
+}
+
+/* Medium: logo, name and role on one row; details start under the name. */
 @container main (min-width: 560px) {
   .index-list {
     --row-columns: 44px minmax(0, 1fr) minmax(0, 13rem) 28px;
@@ -1125,11 +1165,18 @@ button.text-link:hover {
     align-items: start;
   }
 
-  .index-row__highlights > li {
+  .index-row__body > * {
     grid-column: 2 / 4;
+  }
+
+  .row-fact {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    column-gap: var(--layout-gutter);
+    align-items: baseline;
   }
 }
 
+/* Wide: the ten-column row geometry described at the top of this file. */
 @container main (min-width: 880px) {
   .index-list {
     --row-columns: repeat(10, minmax(0, 1fr));
@@ -1152,6 +1199,7 @@ button.text-link:hover {
   .index-row .logo {
     grid-column: 3 / 4;
     grid-row: 1;
+    justify-self: end;
   }
 
   .index-row__main {
@@ -1175,43 +1223,43 @@ button.text-link:hover {
     padding-top: var(--spacing-xs);
   }
 
-  .index-row__highlights > li {
-    grid-column: 4 / 9;
+  .index-row__body > * {
+    grid-column: 4 / 10;
   }
 }
 
-/* Capabilities ------------------------------------------------------------ */
+/* Skills, equipment and systems ----------------------------------------------- */
 
-.layers {
+.blocks {
   display: grid;
   gap: var(--rhythm-xl);
 }
 
-.layer {
+.block {
   display: grid;
   gap: var(--spacing-xl);
   padding-top: var(--rhythm-s);
   border-top: var(--border-width-hairline) solid var(--color-border-strong);
 }
 
-/* Layer label above, its scope underneath, on every width, so no header ever wraps half-way. */
-.layer__header {
-  display: grid;
-  gap: var(--spacing-2xs);
-}
-
-.layer__title {
+.block__header {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-2xs) var(--spacing-sm);
+  justify-content: space-between;
+  gap: var(--spacing-2xs) var(--spacing-lg);
 }
 
-/* Groups need about 15rem to read well, so the column count follows the width:
-   one, then two, then three groups of three page columns each. */
+.block__title {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* Skill groups: one column, then two equal columns (five page columns each),
+   the same split as the profile columns above. */
 .cap-groups {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--spacing-xl) var(--layout-gutter);
+  gap: var(--spacing-2xl) var(--layout-gutter);
 }
 
 .cap-group {
@@ -1220,8 +1268,13 @@ button.text-link:hover {
   align-content: start;
 }
 
-/* Icon, title and items share row tracks across a row of groups, so a title that wraps
-   to two lines pushes its neighbours' rules down with it and the rules stay level. */
+.cap-group__title {
+  padding-bottom: var(--spacing-xs);
+  border-bottom: var(--border-width-hairline) solid var(--color-border-strong);
+}
+
+/* Icon, title and tags share row tracks across a row of groups, so the rules under
+   the titles stay level even when one title wraps. */
 @supports (grid-template-rows: subgrid) {
   .cap-group {
     grid-row: span 3;
@@ -1234,58 +1287,95 @@ button.text-link:hover {
   }
 }
 
-.cap-group__title {
-  padding-bottom: var(--spacing-xs);
-  border-bottom: var(--border-width-hairline) solid var(--color-border-strong);
-}
-
-/* Items read as compact tags that wrap, rather than one long column per group. */
-.cap-group__items {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: start;
-  gap: var(--spacing-xs);
-  color: var(--color-text-secondary);
-}
-
-.cap-group__items > li {
-  padding: 5px var(--spacing-sm);
-  line-height: 1.35;
-  border: var(--border-width-hairline) solid var(--color-border-default);
-}
-
-.cap-group__items > li + li {
-  margin-top: 0;
-}
-
-@container main (min-width: 480px) {
+@container main (min-width: 560px) {
   .cap-groups {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@container main (min-width: 880px) {
-  .cap-groups {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-  }
+/* Equipment rows: kind of plant and employer, logo, then what was run there. */
+.equip-rows {
+  border-bottom: var(--border-width-hairline) solid var(--color-border-default);
+}
 
-  .cap-group {
-    grid-column: span 3;
+.equip-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  grid-template-areas:
+    "logo label"
+    "tags tags";
+  column-gap: var(--spacing-sm);
+  row-gap: var(--spacing-md);
+  align-items: center;
+  padding-block: var(--spacing-lg);
+  border-top: var(--border-width-hairline) solid var(--color-border-default);
+}
+
+.equip-row .logo {
+  grid-area: logo;
+}
+
+.equip-row__label {
+  grid-area: label;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.equip-row__where {
+  color: var(--color-text-tertiary);
+}
+
+.equip-row .tags {
+  grid-area: tags;
+}
+
+@container main (min-width: 560px) {
+  .equip-row {
+    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-areas:
+      "logo label"
+      ".    tags";
+    column-gap: var(--layout-gutter);
   }
 }
 
-/* System rows use the same columns as the experience rows on wide screens. */
+@container main (min-width: 880px) {
+  .equip-row {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    grid-template-areas: none;
+    align-items: start;
+  }
+
+  .equip-row__label {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+
+  .equip-row .logo {
+    grid-column: 3 / 4;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .equip-row .tags {
+    grid-column: 4 / 11;
+    grid-row: 1;
+  }
+}
+
+/* System rows: the same columns as the experience rows on wide screens. */
 .sys-rows {
   border-bottom: var(--border-width-hairline) solid var(--color-border-default);
 }
 
 .sys-row {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
+  grid-template-columns: 44px minmax(0, 1fr);
   grid-template-areas:
-    "icon category"
+    "icon    category"
     "systems systems"
-    "note note";
+    "note    note";
   column-gap: var(--spacing-sm);
   row-gap: var(--spacing-2xs);
   align-items: center;
@@ -1295,6 +1385,7 @@ button.text-link:hover {
 
 .sys-row .icon {
   grid-area: icon;
+  justify-self: end;
 }
 
 .sys-row__category {
@@ -1312,25 +1403,36 @@ button.text-link:hover {
   color: var(--color-text-secondary);
 }
 
+@container main (min-width: 560px) {
+  .sys-row {
+    grid-template-areas:
+      "icon category"
+      ".    systems"
+      ".    note";
+    column-gap: var(--layout-gutter);
+  }
+}
+
 @container main (min-width: 880px) {
   .sys-row {
     grid-template-columns: repeat(10, minmax(0, 1fr));
     grid-template-areas: none;
     column-gap: var(--layout-gutter);
     row-gap: 0;
-    align-items: start;
+    align-items: baseline;
+    padding-block: var(--spacing-lg);
   }
 
   .sys-row__category {
     grid-column: 1 / 3;
     grid-row: 1;
-    padding-top: var(--spacing-xs);
   }
 
   .sys-row .icon {
     grid-column: 3 / 4;
     grid-row: 1;
-    margin-top: var(--spacing-2xs);
+    justify-self: end;
+    align-self: center;
   }
 
   .sys-row__systems {
@@ -1342,7 +1444,6 @@ button.text-link:hover {
   .sys-row__note {
     grid-column: 8 / 11;
     grid-row: 1;
-    padding-top: var(--spacing-2xs);
   }
 }
 
@@ -1529,5 +1630,16 @@ button.text-link:hover {
   .js .highlight {
     background-size: 100% 100%;
     color: var(--color-text-on-accent);
+  }
+}
+
+/* Print: every role open (site.js opens them before printing), no navigation. */
+@media print {
+  .header,
+  .menu,
+  .rows-toggle,
+  .hero__actions,
+  .index-row__toggle {
+    display: none !important;
   }
 }

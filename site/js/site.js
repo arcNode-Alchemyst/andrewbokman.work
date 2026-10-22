@@ -1,5 +1,6 @@
 // Small enhancements. The page reads and works without this file,
-// except for the mobile menu, which falls back to showing the links.
+// except for the mobile menu, which falls back to showing the links,
+// and the "Open all roles" button, which is hidden without it.
 
 (function () {
   'use strict';
@@ -74,6 +75,43 @@
       sectionObserver.observe(section);
     });
   }
+
+  // Experience: one button opens or closes every role. The label follows the rows,
+  // so it stays right when a row is opened by hand.
+  var rowsToggle = document.querySelector('[data-rows-toggle]');
+  var rowsList = rowsToggle && document.getElementById(rowsToggle.getAttribute('aria-controls'));
+  var rows = rowsList ? Array.prototype.slice.call(rowsList.querySelectorAll('details')) : [];
+
+  if (rowsToggle && rows.length) {
+    var allOpen = function () {
+      return rows.every(function (row) { return row.open; });
+    };
+
+    var syncToggle = function () {
+      var open = allOpen();
+      rowsToggle.textContent = open ? 'Close all roles' : 'Open all roles';
+      rowsToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    rowsToggle.addEventListener('click', function () {
+      var open = !allOpen();
+      rows.forEach(function (row) { row.open = open; });
+      syncToggle();
+    });
+
+    rows.forEach(function (row) {
+      row.addEventListener('toggle', syncToggle);
+    });
+
+    syncToggle();
+  }
+
+  // Printing shows every role in full.
+  window.addEventListener('beforeprint', function () {
+    Array.prototype.forEach.call(document.querySelectorAll('details'), function (row) {
+      row.open = true;
+    });
+  });
 
   // Highlight blocks wipe in once, the first time they are seen.
   var highlights = Array.prototype.slice.call(document.querySelectorAll('.highlight'));
