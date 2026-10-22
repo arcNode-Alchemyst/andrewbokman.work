@@ -29,6 +29,11 @@
 
   Narrower than that, every row puts the logo beside the name and lets the
   detail run the full width underneath.
+
+  An employer with more than one role is shown once, as a group: the employer
+  row (years, logo, name, location) and then one row per role. A dot in the
+  logo column marks each role, and a line joins the dots, so the roles read as
+  one progression. Role titles and bullets start on the same line as the names.
 */
 
 /* Base ------------------------------------------------------------------ */
@@ -838,7 +843,8 @@ button.text-link:hover {
 /* Progression ------------------------------------------------------------- */
 
 /* Narrow: a vertical timeline. Each stage is a two-column grid: the track on the left
-   runs through all four rows, so the connector reaches the next marker. */
+   runs through all three rows, so the connector reaches the next marker. Stages carry
+   no numbers: the only numbers on the page are the section labels, 01 to 06 in order. */
 .stage {
   display: grid;
   grid-template-columns: 14px minmax(0, 1fr);
@@ -853,11 +859,11 @@ button.text-link:hover {
 
 .stage__track {
   grid-column: 1;
-  grid-row: 1 / span 4;
+  grid-row: 1 / span 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: var(--spacing-2xs);
+  padding-top: 6px;
 }
 
 .stage__marker {
@@ -897,18 +903,18 @@ button.text-link:hover {
 }
 
 /* Wide: five stages, each two page columns. Rows are shared through subgrid, so
-   markers, numbers, titles and statuses each sit on one line whatever the text length. */
+   markers, titles and statuses each sit on one line whatever the text length. */
 @container main (min-width: 880px) {
   .stages {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-rows: auto auto 1fr auto;
     column-gap: var(--layout-gutter);
     row-gap: var(--spacing-2xs);
   }
 
   .stage {
-    grid-row: span 5;
+    grid-row: span 4;
     grid-template-columns: none;
     grid-template-rows: subgrid;
     row-gap: var(--spacing-2xs);
@@ -1054,7 +1060,7 @@ button.text-link:hover {
   white-space: nowrap;
 }
 
-.index-row .logo {
+.index-row__head > .logo {
   grid-area: logo;
   align-self: start;
 }
@@ -1196,7 +1202,7 @@ button.text-link:hover {
     padding-top: var(--spacing-xs);
   }
 
-  .index-row .logo {
+  .index-row__head > .logo {
     grid-column: 3 / 4;
     grid-row: 1;
     justify-self: end;
@@ -1225,6 +1231,140 @@ button.text-link:hover {
 
   .index-row__body > * {
     grid-column: 4 / 10;
+  }
+}
+
+/* Employers with more than one role ---------------------------------------------
+   The group's first row is an ordinary row head without a toggle (.index-group__head).
+   Each role under it is a <details class="index-row index-row--role">: dot, title,
+   years and summary, then the same bullets and details as any other row. */
+.index-group {
+  padding-block: var(--spacing-lg) var(--spacing-sm);
+  border-top: var(--border-width-hairline) solid var(--color-border-default);
+}
+
+.index-group__head {
+  margin-bottom: var(--spacing-xs);
+}
+
+.index-row--role {
+  --role-line: calc(1.45 * var(--typography-body-large-size));
+  padding-block: var(--spacing-sm);
+  border-top: 0;
+}
+
+.index-row--role .index-row__head {
+  grid-template-areas:
+    "dot title   toggle"
+    ".   years   years"
+    ".   summary summary";
+  row-gap: var(--spacing-2xs);
+  align-items: start;
+}
+
+.index-row--role .index-row__title {
+  grid-area: title;
+}
+
+.index-row--role .index-row__summary {
+  grid-area: summary;
+}
+
+.index-row--role .index-row__toggle {
+  line-height: var(--role-line);
+}
+
+/* The dot: an 11px disc centred on the logo above it and on the title's first line. */
+.index-row__dot {
+  grid-area: dot;
+  position: relative;
+  width: 44px;
+  height: var(--role-line);
+  background: radial-gradient(circle closest-side, var(--color-text-tertiary) calc(100% - 1px), transparent) center / 11px 11px no-repeat;
+}
+
+/* The line between dots. Each dot draws a line up and a line down; the role row clips
+   them at its own top and bottom edges, so neighbouring rows meet with no gap however
+   tall an open role gets. The first role has no line up, the last no line down. */
+@supports (overflow: clip) {
+  .index-row--role {
+    overflow: visible clip;
+  }
+
+  .index-row__dot::before,
+  .index-row__dot::after {
+    content: "";
+    position: absolute;
+    left: calc(50% - var(--border-width-hairline) / 2);
+    width: var(--border-width-hairline);
+    height: 9999px;
+    background: var(--color-border-strong);
+  }
+
+  .index-row__dot::before {
+    bottom: calc(50% + 11px);
+  }
+
+  .index-row__dot::after {
+    top: calc(50% + 11px);
+  }
+
+  .index-group__head + .index-row--role .index-row__dot::before,
+  .index-row--role:last-child .index-row__dot::after {
+    content: none;
+  }
+}
+
+/* Narrow: a role's bullets start under its title, clear of the line. */
+@container main (max-width: 559.98px) {
+  .index-row--role .index-row__body > * {
+    grid-column: 2 / -1;
+  }
+}
+
+/* Medium: the toggle keeps its own column, as on the other rows. */
+@container main (min-width: 560px) {
+  .index-row--role .index-row__head {
+    grid-template-areas:
+      "dot title   title   toggle"
+      ".   years   years   ."
+      ".   summary summary .";
+  }
+}
+
+/* Wide: years in columns 1–2, the dot under the logo in column 3, title and summary
+   in 4–7, the toggle in 10. */
+@container main (min-width: 880px) {
+  .index-row--role .index-row__head {
+    grid-template-areas: none;
+  }
+
+  .index-row--role .index-row__years {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    padding-top: var(--spacing-2xs);
+  }
+
+  .index-row--role .index-row__dot {
+    grid-column: 3 / 4;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .index-row--role .index-row__title {
+    grid-column: 4 / 8;
+    grid-row: 1;
+  }
+
+  .index-row--role .index-row__summary {
+    grid-column: 4 / 8;
+    grid-row: 2;
+  }
+
+  .index-row--role .index-row__toggle {
+    grid-column: 10 / 11;
+    grid-row: 1;
+    padding-top: 0;
   }
 }
 

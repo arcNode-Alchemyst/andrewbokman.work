@@ -49,8 +49,14 @@ each plant. Every fact comes from the current résumé (General v6, October 2026
 ## Common edits
 
 - **New job:** in `index.html`, copy a `<details class="index-row">` block in section 03, paste it at the top of
-  the list and edit the text. Put the word `open` after `class="index-row"` on the row that should start expanded,
+  the list and edit the text. Put the word `open` after the class on the row that should start expanded,
   and move the `Current` tag to it. Wrap the first few words of each bullet in `<strong>` for the lead-in.
+- **Promotion at the same employer:** employers with several roles (Post, Herda's) are an `index-group`: the
+  employer row once, then one `index-row--role` block per role joined by a dotted line, as on LinkedIn. Copy a
+  role block, paste it first inside the group, edit it, and update the years on the employer row. To turn a
+  single-role employer into a group, copy the Post group and replace its text.
+- **Numbers:** the only numbers on the page are the section labels, 01 to 06 in page order. Sub-blocks inside a
+  section (skills, equipment, systems, progression stages) are not numbered, so the sequence never repeats.
 - **Light or dark section:** add or remove `class="theme-light"` on a `<section>`.
 - **Colours:** edit the primitives at the top of `css/tokens.css`. `--blue-50` is the light section background;
   set it to `#ffffff` for pure white.
