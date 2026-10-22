@@ -720,7 +720,7 @@ button.text-link:hover {
   }
 }
 
-/* At a glance: key figures on a panel with a quiet blue glow in one corner. */
+/* Operational breadth: four short pairs on a panel with a quiet blue glow in one corner. */
 .glance {
   container: glance / inline-size;
   display: grid;
@@ -754,40 +754,37 @@ button.text-link:hover {
   column-gap: var(--spacing-lg);
 }
 
-/* Value first on screen, label first for screen readers (dt before dd in the source). */
+/* Each cell: a category heading, then what it covers, directly under it. Cells in a row
+   share their top rule; a description never waits for a longer neighbouring heading. */
 .stat {
   display: grid;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-2xs);
   align-content: start;
   padding-top: var(--spacing-md);
   padding-bottom: var(--spacing-lg);
   border-top: var(--border-width-hairline) solid var(--color-border-default);
 }
 
-.stat__value {
-  order: -1;
-  font-size: clamp(28px, 12.5cqi, 46px);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+.stat__label {
+  color: var(--color-text-primary);
+  font-size: var(--typography-body-size);
+  font-weight: 500;
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
-.stat__label {
+.stat__note {
   color: var(--color-text-secondary);
-  font-size: var(--typography-body-size);
-  line-height: 1.4;
+  font-size: var(--typography-mono-size);
+  line-height: 1.45;
+  text-wrap: pretty;
 }
 
 /* When the panel runs the full width (phones turned sideways, tablets, small laptops):
-   four figures in a row, and the two facts side by side underneath, each over two figures. */
+   four cells in a row, and the two facts side by side underneath, each over two cells. */
 @container glance (min-width: 600px) {
   .stats {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .stat__value {
-    font-size: clamp(32px, 6.2cqi, 46px);
   }
 
   .glance .facts {
@@ -825,7 +822,7 @@ button.text-link:hover {
   color: var(--color-text-tertiary);
 }
 
-/* Stacked inside the panel, the first fact needs no rule: the figures above end the group. */
+/* Stacked inside the panel, the first fact needs no rule: the cells above end the group. */
 @container glance (max-width: 599.98px) {
   .glance .facts .fact:first-child {
     border-top: 0;
