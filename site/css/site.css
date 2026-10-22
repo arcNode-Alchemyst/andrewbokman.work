@@ -773,10 +773,27 @@ button.text-link:hover {
   white-space: nowrap;
 }
 
+/* Number, then what it counts, then a short note naming the parts. */
 .stat__label {
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   font-size: var(--typography-body-size);
   line-height: 1.4;
+}
+
+.stat__note {
+  color: var(--color-text-secondary);
+  font-size: var(--typography-mono-size);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+/* Figures side by side share row tracks, so labels and notes start level even when
+   one label wraps further than its neighbour. */
+@supports (grid-template-rows: subgrid) {
+  .stat {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+  }
 }
 
 /* When the panel runs the full width (phones turned sideways, tablets, small laptops):
