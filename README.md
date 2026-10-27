@@ -3,8 +3,9 @@
 Andrew Bokman's personal site. One page of plain HTML, CSS and a little JavaScript.
 There is no build step and nothing to install.
 
-The design lives in a Figma file named "Andrew Bokman — Website". The CSS token names match the Figma
-variable names.
+The October 2026 refresh replaced the earlier IBM Plex / near-black design, which is still what the Figma file
+"Andrew Bokman — Website" shows. The design rules now live at the top of `css/tokens.css` and in the
+"Design rules" section below.
 
 ## Preview it on your Mac
 
@@ -23,10 +24,11 @@ preview images are working notes kept on this Mac; `.gitignore` leaves them out 
 | File (inside `site/`) | What it holds |
 |---|---|
 | `index.html` | All the content, in page order. Each section starts with a comment such as `<!-- 03 EXPERIENCE -->`. |
-| `css/tokens.css` | Colours, spacing and font sizes. Change a value here and it changes everywhere. |
-| `css/site.css` | Layout and components. The comment at the top explains the page grid. |
-| `js/site.js` | The mobile menu, the highlighted nav link, the "Open all roles" button, opening every role before printing, and the highlight wipe. |
-| `assets/logos`, `assets/icons` | Logo and icon files exported from the Figma design. |
+| `css/tokens.css` | The font, colours, spacing, font sizes and motion timings. Change a value here and it changes everywhere. |
+| `css/site.css` | Layout and components. The comment at the top explains the page grid; the "Motion" section explains every animation. |
+| `js/site.js` | The mobile menu, the highlighted nav link, the "Open all roles" button, opening every role before printing, and starting the progression flow. |
+| `assets/fonts` | Archivo, one variable font file for every weight and width, and its licence (`OFL.txt`). |
+| `assets/logos`, `assets/icons` | Logo and icon files exported from the Figma design. The arrow icons in buttons and links are drawn inline from the small icon set at the top of `index.html`. |
 | `assets/Andrew-Bokman-Resume.pdf` | The résumé the "Résumé" links download. |
 
 ## Layout
@@ -39,6 +41,23 @@ beside the hero text from 1200px. Inside a section, components respond to the wi
 Experience, education, equipment and system rows share one geometry, described at the top of `css/site.css`:
 years or label, then the logo or icon against the name, then the name, then role and location. At every width
 the logos and icons end on the same line and the names, bullets, details and tags start on the same line.
+
+## Design rules
+
+- **Grey is normal, colour means live.** The page is designed like a modern control-room screen: steel greys
+  carry almost everything, and blue is kept for what is current (the present role, the running stage, the
+  "Now" fact), for links on hover, and for keyboard focus.
+- **One typeface, two widths.** Archivo, semi-condensed and heavy for the name and the Contact heading (an
+  equipment nameplate), normal width for everything else. No monospace and no all-caps labels. Years use
+  tabular figures so they line up.
+- **Rounded means pressable.** Buttons and the open/close controls have a small radius; panels, tags and logo
+  tiles are square.
+- **Icons say where a button goes.** A down arrow goes further down the page; an up-right arrow opens the PDF or
+  another site. Nothing else gets an arrow.
+- **One moment of motion.** On load the hero rises in and the panel's flow line draws across; then the progression
+  line fills from 2006 to today and the current stage starts a slow pulse. Everything else moves only when someone
+  taps, clicks or hovers. All of it is skipped when the device asks for reduced motion, and without JavaScript the
+  line is simply drawn in full.
 
 ## Content
 
@@ -55,11 +74,16 @@ each plant. Every fact comes from the current résumé (General v6, October 2026
   employer row once, then one `index-row--role` block per role joined by a dotted line, as on LinkedIn. Copy a
   role block, paste it first inside the group, edit it, and update the years on the employer row. To turn a
   single-role employer into a group, copy the Post group and replace its text.
-- **Numbers:** the only numbers on the page are the section labels, 01 to 06 in page order. Sub-blocks inside a
-  section (skills, equipment, systems, progression stages) are not numbered, so the sequence never repeats.
+- **Numbers:** sections are not numbered (removed October 2026: the sections are not a sequence). The only
+  sequence on the page is the progression, and its stages carry their years.
+- **New progression stage:** copy an `<li class="stage">` block. Its colour along the flow line comes from its
+  position (the `.stage:nth-child(...)` rules under "Progression" in `css/site.css`), so add a rule there for a
+  sixth stage. Move `stage--current` to the newest stage.
 - **Light or dark section:** add or remove `class="theme-light"` on a `<section>`.
-- **Colours:** edit the primitives at the top of `css/tokens.css`. `--blue-50` is the light section background;
-  set it to `#ffffff` for pure white.
+- **Colours:** edit the primitives at the top of `css/tokens.css`. `--mist-50` is the light section background;
+  set it to `#ffffff` for pure white. `--flow-cyan` and `--flow-blue` are the two ends of the flow line.
+- **Icons in buttons and links:** `<svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg>` for a
+  link that opens a PDF or another site, `i--down` / `#i-down` for one that goes down the page.
 - **Résumé:** replace `assets/Andrew-Bokman-Resume.pdf` with a file of the same name. The published PDF is a
   dark web copy of the supplied October 2026 résumé, without the Phone and Address rows. The sidebar rows
   below them are moved up, and the Herda's and Innovative Food Processors locations read "MN". Both the
@@ -82,7 +106,8 @@ each plant. Every fact comes from the current résumé (General v6, October 2026
 - The software degree appears only as an education entry (decided October 2026). The Python, Linux, Git and
   Docker logo files are still in `assets/logos` in case a software section returns.
 - The social preview image (`assets/andrew-bokman-social-preview.png`) was updated in October 2026 to read
-  "Manufacturing Operations Specialist". The Figma file still has the older wording.
+  "Manufacturing Operations Specialist". It, the published résumé PDF and the Figma file still use the earlier
+  design (IBM Plex, near-black and the single blue highlight), not the October 2026 refresh.
 
 ## Publishing: GitHub to Cloudflare Pages
 
@@ -114,6 +139,7 @@ git push
 
 ## Credits
 
-- Typeface: IBM Plex Sans and IBM Plex Mono (SIL Open Font License), loaded from Google Fonts.
+- Typeface: Archivo by Omnibus-Type (SIL Open Font License, `site/assets/fonts/OFL.txt`), self-hosted, so the
+  page makes no requests to Google Fonts.
 - Icons: Lucide (ISC licence).
 - Company, school and software logos belong to their owners and are used to identify them.

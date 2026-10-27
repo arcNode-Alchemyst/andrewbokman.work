@@ -56,9 +56,12 @@ body {
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   font-size: var(--typography-body-size);
-  font-weight: 400;
+  font-weight: var(--weight-regular);
+  font-kerning: normal;
+  font-synthesis: none;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
@@ -115,8 +118,8 @@ button {
 }
 
 ::selection {
-  background: var(--blue-500);
-  color: var(--neutral-0);
+  background: var(--flow-blue);
+  color: var(--white);
 }
 
 :focus-visible {
@@ -130,37 +133,58 @@ button {
   top: -100px;
   z-index: 10;
   padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-control);
   background: var(--color-bg-inverse);
   color: var(--color-text-inverse);
+}
+
+/* Inline icons (Lucide, drawn from the sprite at the top of the page). They take the
+   text colour and sit on the text's centre line. */
+.i {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 .skip-link:focus {
   top: var(--spacing-xs);
 }
 
-/* Text styles (same names as the Figma text styles) ----------------------- */
+/* Text styles ------------------------------------------------------------- */
 
+/* The nameplate: semi-condensed and heavy. Used for the name and the Contact heading. */
 .t-display {
   font-size: var(--typography-display-size);
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-stretch: var(--stretch-display);
+  font-weight: var(--weight-display);
+  line-height: 0.92;
+  letter-spacing: -0.018em;
 }
 
 .t-statement {
   font-size: var(--typography-statement-size);
-  line-height: 1.18;
+  font-weight: var(--weight-regular);
+  line-height: 1.16;
   letter-spacing: -0.02em;
 }
 
 .t-heading {
   font-size: var(--typography-heading-size);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  font-weight: var(--weight-medium);
+  line-height: 1.22;
+  letter-spacing: -0.012em;
 }
 
 .t-body-large {
   font-size: var(--typography-body-large-size);
-  line-height: 1.45;
+  line-height: 1.48;
+  letter-spacing: -0.004em;
 }
 
 .t-body {
@@ -170,21 +194,25 @@ button {
 
 .t-list {
   font-size: var(--typography-body-size);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-.t-mono {
-  font-family: var(--font-mono);
-  font-size: var(--typography-mono-size);
-  line-height: 1.5;
+/* Dates, places and other small facts. Figures are tabular so years line up. */
+.t-meta {
+  font-size: var(--typography-meta-size);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.45;
+  letter-spacing: 0.004em;
 }
 
+/* Small labels: sentence case, slightly narrow, medium weight. */
 .t-label {
-  font-family: var(--font-mono);
   font-size: var(--typography-label-size);
-  line-height: 1.4;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-stretch: var(--stretch-label);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
 }
 
 .is-secondary {
@@ -281,53 +309,51 @@ button {
 
 /* Components -------------------------------------------------------------- */
 
+/* Section names in the rail. No numbers: the sections are not a sequence. */
 .section-label {
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
+  color: var(--color-text-secondary);
 }
 
-.section-label__index {
-  color: var(--color-text-tertiary);
-}
-
-.section-label__name {
-  color: var(--color-text-accent);
-}
-
+/* Header links: an underline grows from the left on hover; the section in view keeps
+   a blue one. */
 .nav-link {
   display: inline-block;
   padding-block: var(--spacing-2xs);
   color: var(--color-text-secondary);
-  border-bottom: var(--border-width-hairline) solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.nav-link:hover {
-  color: var(--color-text-primary);
-  border-bottom-color: var(--color-border-ink);
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0% 1px;
+  transition:
+    color var(--duration-fast) ease,
+    background-size var(--duration-base) var(--ease-out);
 }
 
 .nav-link[aria-current] {
   color: var(--color-text-primary);
-  border-bottom-color: var(--color-border-accent);
+  background-image: linear-gradient(var(--color-border-accent), var(--color-border-accent));
+  background-size: 100% 1px;
 }
 
+/* Text links: a real underline, offset so it clears the descenders. */
 .text-link {
   display: inline-flex;
-  gap: var(--spacing-2xs);
+  gap: 0.3em;
   align-items: center;
-  padding-bottom: var(--spacing-2xs);
   white-space: nowrap;
-  border-bottom: var(--border-width-hairline) solid var(--color-border-strong);
-  transition: color 0.15s ease, border-color 0.15s ease;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-border-strong);
+  text-underline-offset: 0.3em;
+  transition: color var(--duration-fast) ease, text-decoration-color var(--duration-fast) ease;
 }
 
 /* Links stay visually small but get a finger-sized tap area. */
 a.text-link,
 button.text-link,
 .nav-link,
-.header__name {
+.header__name,
+.btn--small {
   position: relative;
 }
 
@@ -340,99 +366,143 @@ button.text-link::after,
   inset: -10px -6px;
 }
 
-a.text-link:hover,
-button.text-link:hover {
-  color: var(--color-text-accent);
-  border-bottom-color: var(--color-border-accent);
-}
-
+/* Buttons --------------------------------------------------------------------
+   Rounded because they can be pressed. One filled button per group for the main
+   action; quiet filled-glass buttons for the actions beside it. The icon names
+   where the button goes: down the page, or out to a PDF or another site. */
 .btn {
   display: inline-flex;
-  gap: var(--spacing-xs);
+  gap: 10px;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: var(--spacing-sm) var(--spacing-lg);
+  min-height: 48px;
+  padding: 0 20px;
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  letter-spacing: 0.002em;
   white-space: nowrap;
-  border: var(--border-width-hairline) solid var(--color-border-ink);
-  border-radius: var(--radius-full);
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  border: var(--border-width-hairline) solid transparent;
+  border-radius: var(--radius-control);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color var(--duration-fast) ease,
+    transform var(--duration-fast) var(--ease-out);
 }
 
-.btn:hover {
-  background: var(--color-bg-inverse);
-  color: var(--color-text-inverse);
+.btn .i {
+  width: 16px;
+  height: 16px;
+  margin-right: -2px;
 }
 
-/* Filled button for the one main action in a group. */
+.btn:active {
+  transform: scale(0.98);
+}
+
 .btn--primary {
   background: var(--color-bg-inverse);
   color: var(--color-text-inverse);
 }
 
-.btn--primary:hover {
-  background: transparent;
+.btn--secondary {
+  background: var(--color-bg-control);
+  border-color: var(--color-border-strong);
   color: var(--color-text-primary);
 }
 
-/* Quieter outline for the actions beside it. */
-.btn--secondary {
-  border-color: var(--color-border-strong);
+.btn--secondary:active {
+  background: var(--color-bg-control-hover);
 }
 
-.btn--secondary:hover {
-  border-color: var(--color-border-ink);
+/* Header and list controls. 36px to look, 44px to touch. */
+.btn--small {
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
 }
 
+.btn--small::after {
+  content: "";
+  position: absolute;
+  inset: -4px -2px;
+}
+
+/* Hover only where there is a real pointer, so a tap on a phone never leaves a
+   button stuck in its hover state. */
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover {
+    color: var(--color-text-primary);
+    background-size: 100% 1px;
+  }
+
+  a.text-link:hover,
+  button.text-link:hover {
+    color: var(--color-text-accent);
+    text-decoration-color: var(--color-border-accent);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-bg-inverse-hover);
+  }
+
+  .btn--secondary:hover {
+    background: var(--color-bg-control-hover);
+    border-color: var(--color-border-ink);
+  }
+
+  .btn:hover .i--down,
+  .text-link:hover .i--down {
+    transform: translateY(2px);
+  }
+
+  .btn:hover .i--out,
+  .text-link:hover .i--out {
+    transform: translate(2px, -2px);
+  }
+}
+
+/* Status chips. "Current" is live, so it is the one in blue, with a lit dot. */
 .tag {
   display: inline-flex;
+  gap: 6px;
   align-items: center;
-  padding: var(--spacing-2xs) var(--spacing-xs);
+  padding: 3px 8px;
   white-space: nowrap;
-  border: var(--border-width-hairline) solid var(--color-border-strong);
+  background: var(--color-bg-chip);
   color: var(--color-text-secondary);
 }
 
 .tag--solid {
-  border-color: var(--color-border-accent);
-  background: var(--color-bg-accent);
-  color: var(--color-text-on-accent);
+  background: var(--color-bg-live);
+  color: var(--color-text-accent);
 }
 
-/* Wrapping item tags: skills, equipment and processes. */
+.tag--solid::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-live);
+  box-shadow: 0 0 0 3px rgb(58 98 255 / 0.22);
+}
+
+/* Wrapping item tags: skills, equipment and processes. Filled, not outlined, so a
+   long list reads as a set rather than a grid of boxes. */
 .tags {
   display: flex;
   flex-wrap: wrap;
   align-content: start;
-  gap: var(--spacing-xs);
+  gap: 6px;
   color: var(--color-text-secondary);
 }
 
 .tags > li {
-  padding: 5px var(--spacing-sm);
-  line-height: 1.35;
-  border: var(--border-width-hairline) solid var(--color-border-default);
-}
-
-/* The accent block behind a key phrase. Once per statement. The phrase never breaks,
-   so the block is always one clean rectangle. */
-.highlight {
-  display: inline-block;
-  white-space: nowrap;
-  background: linear-gradient(var(--color-bg-accent), var(--color-bg-accent)) no-repeat left / 100% 100%;
-  color: var(--color-text-on-accent);
-}
-
-/* Before the wipe the text keeps its normal colour, so it stays readable on any ground. */
-.js .highlight {
-  background-size: 0% 100%;
-  color: inherit;
-  transition: background-size 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.3s ease;
-}
-
-.js .highlight.is-in {
-  background-size: 100% 100%;
-  color: var(--color-text-on-accent);
+  padding: 6px 10px;
+  line-height: 1.3;
+  background: var(--color-bg-chip);
 }
 
 /* Logos: every logo sits on the same 44px tile with the same hairline. */
@@ -468,7 +538,7 @@ button.text-link:hover {
 
 /* A tile that holds an icon instead of a logo (a certification). */
 .logo--icon {
-  background: var(--color-bg-subtle);
+  background: var(--color-bg-raised);
 }
 
 /* Marks without their own ground are masked to the same 30px optical box. */
@@ -506,6 +576,12 @@ button.text-link:hover {
   max-width: none;
 }
 
+/* The icon files are drawn in the light blue made for dark ground. On a light band
+   they are deepened to the light band's blue so they keep their weight. */
+.theme-light .icon img {
+  filter: brightness(0.58) saturate(1.6);
+}
+
 .icon--shield-check img { left: 3.25px; top: 1.25px; }
 .icon--mail img { left: 1.25px; top: 3.25px; }
 .icon--database img { left: 2.25px; top: 1.25px; }
@@ -529,8 +605,12 @@ button.text-link:hover {
   padding-bottom: var(--spacing-lg);
 }
 
+/* The name in the header uses the nameplate width, small. */
 .header__name {
   white-space: nowrap;
+  font-stretch: var(--stretch-display);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.005em;
 }
 
 .header__nav {
@@ -541,7 +621,7 @@ button.text-link:hover {
 
 .header__links {
   display: none;
-  gap: var(--spacing-xl);
+  gap: 28px;
   align-items: center;
 }
 
@@ -625,8 +705,15 @@ button.text-link:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-block: var(--spacing-md);
+  padding-block: 14px;
+  font-weight: var(--weight-medium);
   border-top: var(--border-width-hairline) solid var(--color-border-default);
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--duration-fast) ease;
+}
+
+.menu__links a:active {
+  color: var(--color-text-accent);
 }
 
 .menu__bottom {
@@ -637,7 +724,7 @@ button.text-link:hover {
 
 .menu__actions {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-sm);
 }
 
 /* Hero -------------------------------------------------------------------- */
@@ -666,22 +753,41 @@ button.text-link:hover {
   display: grid;
 }
 
-.hero__role {
-  color: var(--color-text-accent);
+/* Name and role read as one nameplate: the name, then what he does, set close under it. */
+.hero__name {
+  margin-left: -0.04em;
 }
 
-.hero__name {
-  margin-top: var(--spacing-md);
+.hero__name-line {
+  display: inline-block;
+}
+
+.hero__role {
+  margin-top: clamp(14px, 1.4vw, 20px);
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-regular);
 }
 
 .hero__statement {
-  margin-top: clamp(24px, 2.2vw, 32px);
+  margin-top: clamp(32px, 3.4vw, 48px);
   max-inline-size: var(--measure-statement);
 }
 
 .hero__summary {
   margin-top: var(--spacing-md);
   max-inline-size: 52ch;
+}
+
+/* On a phone the name stacks onto two lines and grows to fill the width. */
+@container hero-text (max-width: 639.98px) {
+  .hero__name {
+    font-size: min(23vw, 112px);
+    line-height: 0.88;
+  }
+
+  .hero__name-line {
+    display: block;
+  }
 }
 
 .hero__actions {
@@ -720,32 +826,32 @@ button.text-link:hover {
   }
 }
 
-/* Operational breadth: four short pairs on a panel with a quiet blue glow in one corner. */
+/* Operational breadth: four short pairs on a raised panel. Its top edge is a length of
+   the same flow line as the progression below, with the light it gives off. */
 .glance {
   container: glance / inline-size;
+  position: relative;
   display: grid;
-  gap: var(--spacing-lg);
-  padding: var(--spacing-lg);
+  gap: var(--spacing-md);
+  padding: clamp(20px, 2vw, 28px);
   background:
-    radial-gradient(85% 65% at 100% 0%, rgb(15 61 255 / 0.34), rgb(15 61 255 / 0) 70%),
-    var(--color-bg-subtle);
+    radial-gradient(120% 70% at 0% 0%, rgb(69 200 242 / 0.09), transparent 60%),
+    radial-gradient(90% 60% at 100% 0%, rgb(58 98 255 / 0.16), transparent 65%),
+    var(--color-bg-raised);
   border: var(--border-width-hairline) solid var(--color-border-default);
 }
 
-.glance__title {
-  display: flex;
-  gap: var(--spacing-xs);
-  align-items: center;
-  color: var(--color-text-tertiary);
+.glance::before {
+  content: "";
+  position: absolute;
+  inset: -1px -1px auto;
+  height: var(--line-flow);
+  background: var(--flow-gradient);
+  transform-origin: left center;
 }
 
-.glance__title::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-bg-accent);
-  box-shadow: 0 0 0 3px rgb(15 61 255 / 0.25);
+.glance__title {
+  color: var(--color-text-tertiary);
 }
 
 .stats {
@@ -768,16 +874,37 @@ button.text-link:hover {
 .stat__label {
   color: var(--color-text-primary);
   font-size: var(--typography-body-size);
-  font-weight: 500;
-  line-height: 1.35;
+  font-weight: var(--weight-semibold);
+  line-height: 1.3;
+  letter-spacing: -0.006em;
   text-wrap: balance;
 }
 
 .stat__note {
   color: var(--color-text-secondary);
-  font-size: var(--typography-mono-size);
+  font-size: var(--typography-meta-size);
   line-height: 1.45;
   text-wrap: pretty;
+}
+
+/* "Now": the one live fact, so it carries the lit dot. */
+.fact--live dt {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.fact--live dt::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-live);
+  box-shadow: 0 0 0 3px rgb(58 98 255 / 0.24);
+}
+
+.fact--live dd {
+  font-weight: var(--weight-medium);
 }
 
 /* When the panel runs the full width (phones turned sideways, tablets, small laptops):
@@ -854,31 +981,59 @@ button.text-link:hover {
   grid-column: 2;
 }
 
+/* The career as a process line. Each stage has its own colour along one gradient, cyan
+   in 2006 to blue today, and each connector runs from its stage's colour to the next,
+   so the line reads as one continuous run. Finished stages are hollow rings; the
+   current stage is filled, the way a running unit is shown on a control screen. */
+.stage:nth-child(1) { --i: 0; --c: #45c8f2; --c-next: #41aef7; }
+.stage:nth-child(2) { --i: 1; --c: #41aef7; --c-next: #3c93fb; }
+.stage:nth-child(3) { --i: 2; --c: #3c93fb; --c-next: #3b7afd; }
+.stage:nth-child(4) { --i: 3; --c: #3b7afd; --c-next: #3a62ff; }
+.stage:nth-child(5) { --i: 4; --c: #3a62ff; --c-next: #3a62ff; }
+.stage:nth-child(n + 6) { --i: 5; --c: #3a62ff; --c-next: #3a62ff; }
+
 .stage__track {
   grid-column: 1;
   grid-row: 1 / span 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 6px;
+  padding-top: 8px;
 }
 
 .stage__marker {
+  position: relative;
   flex: none;
   width: 14px;
   height: 14px;
+  border: var(--line-flow) solid var(--c);
   border-radius: 50%;
-  background: var(--color-bg-inverse);
+  background: var(--color-bg-ground);
 }
 
 .stage__connector {
+  position: relative;
   flex: 1;
-  width: 1px;
-  background: var(--color-border-ink);
+  width: var(--line-flow);
+  margin-top: 6px;
+  margin-bottom: -2px;
+  background: var(--color-border-default);
+}
+
+.stage__connector::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--c), var(--c-next));
+  transform-origin: center top;
 }
 
 .stage:last-child .stage__connector {
   visibility: hidden;
+}
+
+.stage__title {
+  font-weight: var(--weight-medium);
 }
 
 .stage__status {
@@ -891,8 +1046,18 @@ button.text-link:hover {
 }
 
 .stage--current .stage__marker {
-  background: var(--color-bg-accent);
-  box-shadow: 0 0 0 4px rgb(15 61 255 / 0.3);
+  background: var(--c);
+  box-shadow: 0 0 0 4px rgb(58 98 255 / 0.24);
+}
+
+/* The pulse ring around the running stage (animated in the motion section). */
+.stage--current .stage__marker::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: var(--line-flow) solid var(--c);
+  border-radius: 50%;
+  opacity: 0;
 }
 
 .stage--current .stage__status {
@@ -924,8 +1089,8 @@ button.text-link:hover {
   .stage__track {
     grid-row: 1;
     flex-direction: row;
-    margin-right: calc(-1 * var(--layout-gutter));
-    margin-bottom: var(--spacing-sm);
+    margin-right: calc(-1 * var(--layout-gutter) + 6px);
+    margin-bottom: var(--spacing-md);
     padding-top: 0;
   }
 
@@ -935,7 +1100,13 @@ button.text-link:hover {
 
   .stage__connector {
     width: auto;
-    height: 1px;
+    height: var(--line-flow);
+    margin: 0 0 0 6px;
+  }
+
+  .stage__connector::after {
+    background: linear-gradient(90deg, var(--c), var(--c-next));
+    transform-origin: left center;
   }
 
   .stage__title,
@@ -1024,8 +1195,19 @@ button.text-link:hover {
   outline-offset: var(--spacing-xs);
 }
 
-.index-row > summary:hover .index-row__title {
-  color: var(--color-text-accent);
+.index-row > summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .index-row > summary:hover .index-row__title {
+    color: var(--color-text-accent);
+  }
+
+  .index-row > summary:hover .index-row__toggle {
+    background: var(--color-bg-control-hover);
+    border-color: var(--color-border-ink);
+  }
 }
 
 .index-row__head,
@@ -1053,7 +1235,7 @@ button.text-link:hover {
   color: var(--color-text-secondary);
 }
 
-.index-row__years .t-mono {
+.index-row__years .t-meta {
   white-space: nowrap;
 }
 
@@ -1075,7 +1257,11 @@ button.text-link:hover {
 }
 
 .index-row__title {
-  transition: color 0.15s ease;
+  transition: color var(--duration-fast) ease;
+}
+
+.index-row--role .index-row__title {
+  font-weight: var(--weight-medium);
 }
 
 .index-row__side {
@@ -1090,18 +1276,42 @@ button.text-link:hover {
   color: var(--color-text-tertiary);
 }
 
+/* The open/close control: a pressable square with a drawn plus. Opening folds the
+   upright bar away, leaving a minus. */
 .index-row__toggle {
   grid-area: toggle;
   justify-self: end;
-  line-height: 1;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border: var(--border-width-hairline) solid var(--color-border-strong);
+  border-radius: 6px;
+  background: var(--color-bg-control);
+  transition:
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease;
 }
 
-.index-row__toggle::before {
-  content: "+";
+.index-row__toggle::before,
+.index-row__toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -6px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
-.index-row[open] .index-row__toggle::before {
-  content: "\2013";
+.index-row__toggle::after {
+  transform: rotate(90deg);
+}
+
+.index-row[open] .index-row__toggle::after {
+  transform: rotate(0deg);
 }
 
 .index-row__body {
@@ -1126,7 +1336,7 @@ button.text-link:hover {
 
 /* Lead-in: the first words of each bullet carry the point. */
 .index-row__highlights strong {
-  font-weight: 500;
+  font-weight: var(--weight-semibold);
   color: var(--color-text-primary);
 }
 
@@ -1268,7 +1478,7 @@ button.text-link:hover {
 }
 
 .index-row--role .index-row__toggle {
-  line-height: var(--role-line);
+  margin-top: calc((var(--role-line) - 28px) / 2);
 }
 
 /* The dot: an 11px disc centred on the logo above it and on the title's first line. */
@@ -1389,6 +1599,12 @@ button.text-link:hover {
 .block__title {
   display: flex;
   gap: var(--spacing-sm);
+  color: var(--color-text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.block__header > :not(.block__title) {
+  color: var(--color-text-tertiary);
 }
 
 /* Skill groups: one column, then two equal columns (five page columns each),
@@ -1407,6 +1623,7 @@ button.text-link:hover {
 
 .cap-group__title {
   padding-bottom: var(--spacing-xs);
+  font-weight: var(--weight-medium);
   border-bottom: var(--border-width-hairline) solid var(--color-border-strong);
 }
 
@@ -1457,6 +1674,10 @@ button.text-link:hover {
   display: grid;
   gap: 2px;
   min-width: 0;
+}
+
+.equip-row__kind {
+  font-weight: var(--weight-medium);
 }
 
 .equip-row__where {
@@ -1748,7 +1969,170 @@ button.text-link:hover {
   color: var(--color-text-tertiary);
 }
 
-/* Motion preferences ------------------------------------------------------ */
+/* Motion ------------------------------------------------------------------
+   One orchestrated moment and nothing else that moves on its own:
+     1. The opening: the header, the name (line by line), the role, the statement,
+        the actions and the panel rise in, and the panel's flow line draws across.
+     2. The flow: when the progression comes into view (after the opening, on a wide
+        screen), the line fills stage by stage from 2006 to today, each ring lights
+        as the flow reaches it, and the current stage starts its slow pulse.
+   Everything else moves only in answer to a tap or a pointer: buttons press,
+   icons nudge, a role opens, the menu opens.
+   All of it is skipped when the device asks for reduced motion, and none of it
+   hides content: without JavaScript the line is simply drawn in full. */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+
+  @keyframes rise-sm {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes draw-x {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  @keyframes live-pulse {
+    0% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+
+    80%,
+    100% {
+      opacity: 0;
+      transform: scale(2.5);
+    }
+  }
+
+  @keyframes row-open {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  /* 1. The opening */
+  .header {
+    animation: fade 600ms ease 100ms both;
+  }
+
+  .hero__name-line {
+    animation: rise var(--duration-slow) var(--ease-out) 60ms both;
+  }
+
+  .hero__name-line + .hero__name-line {
+    animation-delay: 150ms;
+  }
+
+  .hero__role {
+    animation: rise var(--duration-slow) var(--ease-out) 260ms both;
+  }
+
+  .hero__statement {
+    animation: rise var(--duration-slow) var(--ease-out) 340ms both;
+  }
+
+  .hero__summary {
+    animation: rise var(--duration-slow) var(--ease-out) 410ms both;
+  }
+
+  .hero__actions {
+    animation: rise var(--duration-slow) var(--ease-out) 480ms both;
+  }
+
+  .hero__aside {
+    animation: rise var(--duration-slow) var(--ease-out) 560ms both;
+  }
+
+  .glance::before {
+    animation: draw-x 1100ms var(--ease-in-out) 700ms both;
+  }
+
+  /* 2. The flow (only when site.js has set it up, so the line is never left empty) */
+  .js-flow .stage__marker {
+    transition:
+      border-color 240ms ease,
+      background-color 240ms ease,
+      box-shadow 240ms ease,
+      transform 460ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: calc(var(--i) * var(--flow-step));
+  }
+
+  .js-flow .stages:not(.is-flowing) .stage__marker {
+    border-color: var(--color-border-strong);
+    transform: scale(0.72);
+  }
+
+  .js-flow .stages:not(.is-flowing) .stage--current .stage__marker {
+    background-color: var(--color-bg-ground);
+    box-shadow: none;
+  }
+
+  .js-flow .stage__connector::after {
+    transition: transform var(--flow-step) linear calc(var(--i) * var(--flow-step));
+  }
+
+  .js-flow .stages:not(.is-flowing) .stage__connector::after {
+    transform: scaleY(0);
+  }
+
+  @container main (min-width: 880px) {
+    .js-flow .stages:not(.is-flowing) .stage__connector::after {
+      transform: scaleX(0);
+    }
+  }
+
+  .stage--current .stage__marker::after {
+    animation: live-pulse 2.8s var(--ease-out) infinite;
+  }
+
+  .js-flow .stage--current .stage__marker::after {
+    animation-delay: calc(var(--i) * var(--flow-step) + 300ms);
+  }
+
+  .js-flow .stages:not(.is-flowing) .stage--current .stage__marker::after {
+    animation: none;
+  }
+
+  /* In answer to a person */
+  .index-row[open] > .index-row__body {
+    animation: row-open var(--duration-base) var(--ease-out);
+  }
+
+  .menu[open] {
+    animation: fade 200ms ease;
+  }
+
+  .menu[open] .menu__links li,
+  .menu[open] .menu__bottom {
+    animation: rise-sm 420ms var(--ease-out) both;
+  }
+
+  .menu[open] .menu__links li:nth-child(1) { animation-delay: 40ms; }
+  .menu[open] .menu__links li:nth-child(2) { animation-delay: 75ms; }
+  .menu[open] .menu__links li:nth-child(3) { animation-delay: 110ms; }
+  .menu[open] .menu__links li:nth-child(4) { animation-delay: 145ms; }
+  .menu[open] .menu__links li:nth-child(5) { animation-delay: 180ms; }
+  .menu[open] .menu__links li:nth-child(n + 6) { animation-delay: 215ms; }
+  .menu[open] .menu__bottom { animation-delay: 240ms; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1763,11 +2147,6 @@ button.text-link:hover {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-
-  .js .highlight {
-    background-size: 100% 100%;
-    color: var(--color-text-on-accent);
-  }
 }
 
 /* Print: every role open (site.js opens them before printing), no navigation. */
@@ -1778,5 +2157,12 @@ button.text-link:hover {
   .hero__actions,
   .index-row__toggle {
     display: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

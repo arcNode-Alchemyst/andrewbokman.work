@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Andrew Bokman — Manufacturing Operations Specialist</title>
   <meta name="description" content="Manufacturing Operations Specialist with 15+ years in food manufacturing and process operations across continuous, batch and multi-line production. Resource Operator II at Agropur in Le Sueur, Minnesota.">
-  <meta name="theme-color" content="#0b0c0e">
+  <meta name="theme-color" content="#12161b">
   <meta name="color-scheme" content="dark">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Andrew Bokman — Manufacturing Operations Specialist">
@@ -25,16 +25,33 @@
   <meta name="twitter:image:alt" content="Andrew Bokman — Manufacturing Operations Specialist">
   <link rel="canonical" href="https://andrewbokman.work/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <script>document.documentElement.className = 'js';</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;500&display=swap">
-  <!-- The arrows used in links are not in the standard Latin font file, so they are requested separately. -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&text=%E2%86%92%E2%86%97&display=swap">
+  <script>
+    (function (root) {
+      root.className = 'js';
+      // The progression line flows in when it is first seen (site.js). This is set up
+      // before the first paint, so the line never shows in full and then empties.
+      // If site.js has not run by the time the page has loaded, the line is shown in full.
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window) {
+        root.classList.add('js-flow');
+        window.addEventListener('load', function () {
+          if (!window.siteScriptReady) root.classList.remove('js-flow');
+        });
+      }
+    })(document.documentElement);
+  </script>
+  <!-- One self-hosted variable font file (Archivo) for every weight and width on the page. -->
+  <link rel="preload" href="assets/fonts/archivo-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
+  <!-- Icons (Lucide, ISC licence). Use one with <svg class="i"><use href="#i-out"/></svg>.
+       i-down: goes further down this page. i-out: opens a PDF or another site. -->
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  </svg>
+
   <a class="skip-link t-body" href="#main">Skip to content</a>
 
   <!-- HEADER -->
@@ -49,8 +66,8 @@
           <li><a class="nav-link" href="#education">Education</a></li>
           <li><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
-        <a class="text-link header__resume t-body" href="assets/Andrew-Bokman-Resume.pdf">Résumé <span aria-hidden="true">↗</span></a>
-        <button class="text-link header__menu-button t-body" type="button" aria-haspopup="dialog" aria-controls="menu">Menu</button>
+        <a class="btn btn--secondary btn--small header__resume" href="assets/Andrew-Bokman-Resume.pdf">Résumé <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <button class="btn btn--secondary btn--small header__menu-button" type="button" aria-haspopup="dialog" aria-controls="menu">Menu</button>
       </nav>
     </div>
   </header>
@@ -59,23 +76,23 @@
   <dialog class="menu" id="menu" aria-label="Menu">
     <div class="menu__top">
       <div class="menu__header">
-        <span class="t-body-large">Andrew Bokman</span>
-        <button class="text-link t-body" type="button" data-menu-close>Close</button>
+        <span class="header__name t-body-large">Andrew Bokman</span>
+        <button class="btn btn--secondary btn--small" type="button" data-menu-close>Close</button>
       </div>
       <ul class="menu__links t-statement">
-        <li><a href="#profile">Profile <span class="t-body-large is-secondary" aria-hidden="true">→</span></a></li>
-        <li><a href="#experience">Experience <span class="t-body-large is-secondary" aria-hidden="true">→</span></a></li>
-        <li><a href="#skills">Skills <span class="t-body-large is-secondary" aria-hidden="true">→</span></a></li>
-        <li><a href="#education">Education <span class="t-body-large is-secondary" aria-hidden="true">→</span></a></li>
-        <li><a href="#contact">Contact <span class="t-body-large is-secondary" aria-hidden="true">→</span></a></li>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
     <div class="menu__bottom">
-      <p class="menu__actions t-body">
-        <a class="text-link" href="assets/Andrew-Bokman-Resume.pdf">Résumé <span aria-hidden="true">↗</span></a>
-        <a class="text-link" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <span aria-hidden="true">↗</span></a>
+      <p class="menu__actions">
+        <a class="btn btn--secondary btn--small" href="assets/Andrew-Bokman-Resume.pdf">Résumé <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="btn btn--secondary btn--small" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
       </p>
-      <a class="text-link t-mono is-secondary" href="mailto:a_bokman@proton.me">a_bokman@proton.me</a>
+      <a class="text-link t-meta is-secondary" href="mailto:a_bokman@proton.me">a_bokman@proton.me</a>
     </div>
   </dialog>
 
@@ -86,15 +103,15 @@
         <div class="page-grid hero__grid">
           <div class="hero__text">
             <div class="hero__identity">
-              <p class="hero__role t-label">Manufacturing Operations Specialist</p>
-              <h1 class="hero__name t-display">Andrew Bokman</h1>
-              <p class="hero__statement t-statement">15+ years in food manufacturing and <span class="highlight">process operations</span> across continuous, batch and multi-line production.</p>
+              <h1 class="hero__name t-display"><span class="hero__name-line">Andrew</span> <span class="hero__name-line">Bokman</span></h1>
+              <p class="hero__role t-heading">Manufacturing Operations Specialist</p>
+              <p class="hero__statement t-statement">15+ years in food manufacturing and process operations across continuous, batch and multi-⁠line production.</p>
               <p class="hero__summary t-body-large is-secondary">Experienced in leading day-to-day production, troubleshooting abnormal conditions and training operators.</p>
             </div>
-            <p class="hero__actions t-body">
-              <a class="btn btn--primary" href="#experience">View experience <span aria-hidden="true">→</span></a>
-              <a class="btn btn--secondary" href="assets/Andrew-Bokman-Resume.pdf">Résumé <span aria-hidden="true">↗</span></a>
-              <a class="btn btn--secondary" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <span aria-hidden="true">↗</span></a>
+            <p class="hero__actions">
+              <a class="btn btn--primary" href="#experience">View experience <svg class="i i--down" aria-hidden="true"><use href="#i-down"/></svg></a>
+              <a class="btn btn--secondary" href="assets/Andrew-Bokman-Resume.pdf">Résumé <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
+              <a class="btn btn--secondary" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
             </p>
           </div>
 
@@ -110,7 +127,7 @@
                 <div class="stat"><dt class="stat__label">Team leadership</dt><dd class="stat__note">Directed 4–⁠5 operators in high-⁠volume processing</dd></div>
               </dl>
               <dl class="facts">
-                <div class="fact"><dt class="t-label">Now</dt><dd class="t-body">Resource Operator&nbsp;II, Agropur</dd></div>
+                <div class="fact fact--live"><dt class="t-label">Now</dt><dd class="t-body">Resource Operator&nbsp;II, Agropur</dd></div>
               </dl>
             </div>
           </aside>
@@ -118,11 +135,11 @@
       </div>
     </section>
 
-    <!-- 01 PROGRESSION -->
+    <!-- PROGRESSION -->
     <section class="progression" aria-labelledby="progression-label">
       <div class="container">
         <div class="page-grid section-grid section-grid--ruled section-grid--compact">
-          <h2 class="section-label t-label" id="progression-label"><span class="section-label__index">01</span><span class="section-label__name">Progression</span></h2>
+          <h2 class="section-label t-label" id="progression-label"><span class="section-label__name">Progression</span></h2>
           <div class="section-main">
             <ol class="stages">
               <li class="stage">
@@ -161,11 +178,11 @@
       </div>
     </section>
 
-    <!-- 02 PROFILE (light) -->
+    <!-- PROFILE (light) -->
     <section class="theme-light" id="profile" aria-labelledby="profile-label">
       <div class="container">
         <div class="page-grid section-grid">
-          <p class="section-label t-label" id="profile-label"><span class="section-label__index">02</span><span class="section-label__name">Profile</span></p>
+          <p class="section-label t-label" id="profile-label"><span class="section-label__name">Profile</span></p>
           <div class="section-main">
             <h2 class="profile__lead t-statement">I’ve run production in a custom meat shop, on a multi-product cereal line, and now across a cheese and whey plant.</h2>
             <div class="profile__columns">
@@ -185,7 +202,7 @@
       </div>
     </section>
 
-    <!-- 03 EXPERIENCE
+    <!-- EXPERIENCE
          An employer with one role is one <details class="index-row"> block.
          An employer with several roles is one <div class="index-group">: the employer row first (logo, name,
          full span of years, location), then one <details class="index-row index-row--role"> per role, newest
@@ -199,20 +216,20 @@
     <section id="experience" aria-labelledby="experience-label">
       <div class="container">
         <div class="page-grid section-grid">
-          <p class="section-label t-label" id="experience-label"><span class="section-label__index">03</span><span class="section-label__name">Experience</span></p>
+          <p class="section-label t-label" id="experience-label"><span class="section-label__name">Experience</span></p>
           <div class="section-main">
             <div class="section-heading">
               <h2 class="t-statement">From the warehouse floor to continuous process operations.</h2>
               <div class="section-heading__row">
                 <p class="t-body-large is-secondary">Eight roles at five employers since 2006, most recent first. Open a row for the detail.</p>
-                <button class="text-link rows-toggle t-body" type="button" data-rows-toggle aria-controls="roles">Open all roles</button>
+                <button class="btn btn--secondary btn--small rows-toggle" type="button" data-rows-toggle aria-controls="roles">Open all roles</button>
               </div>
             </div>
             <div class="index-list" id="roles">
               <details class="index-row" open>
                 <summary>
                   <span class="index-row__head">
-                    <span class="index-row__years"><span class="t-mono">Feb 2026 – Present</span><span class="tag tag--solid t-label">Current</span></span>
+                    <span class="index-row__years"><span class="t-meta">Feb 2026 – Present</span><span class="tag tag--solid t-label">Current</span></span>
                     <span class="logo logo--photo"><img src="assets/logos/agropur.png" alt="" width="44" height="44"></span>
                     <span class="index-row__main">
                       <span class="index-row__title t-heading" role="heading" aria-level="3">Agropur</span>
@@ -220,9 +237,9 @@
                     </span>
                     <span class="index-row__side">
                       <span class="index-row__role t-body">Resource Operator II</span>
-                      <span class="index-row__location t-mono">Le Sueur, Minnesota</span>
+                      <span class="index-row__location t-meta">Le Sueur, Minnesota</span>
                     </span>
-                    <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                    <span class="index-row__toggle" aria-hidden="true"></span>
                   </span>
                 </summary>
                 <div class="index-row__body">
@@ -243,24 +260,24 @@
 
               <div class="index-group">
                 <div class="index-row__head index-group__head">
-                  <span class="index-row__years"><span class="t-mono">Jul 2019 – Jun 2024</span></span>
+                  <span class="index-row__years"><span class="t-meta">Jul 2019 – Jun 2024</span></span>
                   <span class="logo logo--photo"><img src="assets/logos/post-consumer-brands.png" alt="" width="44" height="44"></span>
                   <span class="index-row__main">
                     <h3 class="index-row__title t-heading">Post Consumer Brands</h3>
                     <span class="index-row__summary t-body">Cereal manufacturing.</span>
                   </span>
                   <span class="index-row__side">
-                    <span class="index-row__location t-mono">Northfield, Minnesota</span>
+                    <span class="index-row__location t-meta">Northfield, Minnesota</span>
                   </span>
                 </div>
                 <details class="index-row index-row--role">
                   <summary>
                     <span class="index-row__head">
-                      <span class="index-row__years"><span class="t-mono">2021 – Jun 2024</span></span>
+                      <span class="index-row__years"><span class="t-meta">2021 – Jun 2024</span></span>
                       <span class="index-row__dot" aria-hidden="true"></span>
                       <span class="index-row__title t-body-large" role="heading" aria-level="4">Processing Specialist</span>
                       <span class="index-row__summary t-body">Led processing on a multi-product cereal line, directing 4–⁠5 operators.</span>
-                      <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                      <span class="index-row__toggle" aria-hidden="true"></span>
                     </span>
                   </summary>
                   <div class="index-row__body">
@@ -282,11 +299,11 @@
                 <details class="index-row index-row--role">
                   <summary>
                     <span class="index-row__head">
-                      <span class="index-row__years"><span class="t-mono">Jul 2019 – 2021</span></span>
+                      <span class="index-row__years"><span class="t-meta">Jul 2019 – 2021</span></span>
                       <span class="index-row__dot" aria-hidden="true"></span>
                       <span class="index-row__title t-body-large" role="heading" aria-level="4">Processing Operator</span>
                       <span class="index-row__summary t-body">Multi-stage cereal processing; promoted to Processing Specialist in 2021.</span>
-                      <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                      <span class="index-row__toggle" aria-hidden="true"></span>
                     </span>
                   </summary>
                   <div class="index-row__body">
@@ -300,24 +317,24 @@
 
               <div class="index-group">
                 <div class="index-row__head index-group__head">
-                  <span class="index-row__years"><span class="t-mono">2012 – 2019</span></span>
+                  <span class="index-row__years"><span class="t-meta">2012 – 2019</span></span>
                   <span class="logo logo--photo logo--dark"><img src="assets/logos/herdas-meat-processing.svg" alt="" width="44" height="44"></span>
                   <span class="index-row__main">
                     <h3 class="index-row__title t-heading">Herda’s Meat Processing</h3>
                     <span class="index-row__summary t-body">Custom beef and pork processing.</span>
                   </span>
                   <span class="index-row__side">
-                    <span class="index-row__location t-mono">Minnesota</span>
+                    <span class="index-row__location t-meta">Minnesota</span>
                   </span>
                 </div>
                 <details class="index-row index-row--role">
                   <summary>
                     <span class="index-row__head">
-                      <span class="index-row__years"><span class="t-mono">2015 – 2019</span></span>
+                      <span class="index-row__years"><span class="t-meta">2015 – 2019</span></span>
                       <span class="index-row__dot" aria-hidden="true"></span>
                       <span class="index-row__title t-body-large" role="heading" aria-level="4">Manager</span>
                       <span class="index-row__summary t-body">Daily operations, production planning and customer orders.</span>
-                      <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                      <span class="index-row__toggle" aria-hidden="true"></span>
                     </span>
                   </summary>
                   <div class="index-row__body">
@@ -336,11 +353,11 @@
                 <details class="index-row index-row--role">
                   <summary>
                     <span class="index-row__head">
-                      <span class="index-row__years"><span class="t-mono">2014 – 2015</span></span>
+                      <span class="index-row__years"><span class="t-meta">2014 – 2015</span></span>
                       <span class="index-row__dot" aria-hidden="true"></span>
                       <span class="index-row__title t-body-large" role="heading" aria-level="4">Apprentice Butcher</span>
                       <span class="index-row__summary t-body">Cutting to customer specifications; progressed to independent cutting work.</span>
-                      <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                      <span class="index-row__toggle" aria-hidden="true"></span>
                     </span>
                   </summary>
                   <div class="index-row__body">
@@ -356,11 +373,11 @@
                 <details class="index-row index-row--role">
                   <summary>
                     <span class="index-row__head">
-                      <span class="index-row__years"><span class="t-mono">2012 – 2014</span></span>
+                      <span class="index-row__years"><span class="t-meta">2012 – 2014</span></span>
                       <span class="index-row__dot" aria-hidden="true"></span>
                       <span class="index-row__title t-body-large" role="heading" aria-level="4">Meat Cutter</span>
                       <span class="index-row__summary t-body">Carcass breakdown, deboning, portioning and grinding.</span>
-                      <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                      <span class="index-row__toggle" aria-hidden="true"></span>
                     </span>
                   </summary>
                   <div class="index-row__body">
@@ -377,7 +394,7 @@
               <details class="index-row">
                 <summary>
                   <span class="index-row__head">
-                    <span class="index-row__years"><span class="t-mono">2008 – 2012</span></span>
+                    <span class="index-row__years"><span class="t-meta">2008 – 2012</span></span>
                     <span class="logo logo--photo"><img src="assets/logos/innovative-food-processors.png" alt="" width="44" height="44"></span>
                     <span class="index-row__main">
                       <span class="index-row__title t-heading" role="heading" aria-level="3">Innovative Food Processors</span>
@@ -385,9 +402,9 @@
                     </span>
                     <span class="index-row__side">
                       <span class="index-row__role t-body">Processing Operator</span>
-                      <span class="index-row__location t-mono">Minnesota</span>
+                      <span class="index-row__location t-meta">Minnesota</span>
                     </span>
-                    <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                    <span class="index-row__toggle" aria-hidden="true"></span>
                   </span>
                 </summary>
                 <div class="index-row__body">
@@ -401,7 +418,7 @@
               <details class="index-row">
                 <summary>
                   <span class="index-row__head">
-                    <span class="index-row__years"><span class="t-mono">2006 – 2008</span></span>
+                    <span class="index-row__years"><span class="t-meta">2006 – 2008</span></span>
                     <span class="logo logo--mclane"><span class="logo__clip"><img src="assets/logos/mclane.svg" alt=""></span></span>
                     <span class="index-row__main">
                       <span class="index-row__title t-heading" role="heading" aria-level="3">McLane</span>
@@ -409,9 +426,9 @@
                     </span>
                     <span class="index-row__side">
                       <span class="index-row__role t-body">Selector</span>
-                      <span class="index-row__location t-mono">Northfield, Minnesota</span>
+                      <span class="index-row__location t-meta">Northfield, Minnesota</span>
                     </span>
-                    <span class="index-row__toggle t-heading" aria-hidden="true"></span>
+                    <span class="index-row__toggle" aria-hidden="true"></span>
                   </span>
                 </summary>
                 <div class="index-row__body">
@@ -427,11 +444,11 @@
       </div>
     </section>
 
-    <!-- 04 SKILLS -->
+    <!-- SKILLS -->
     <section id="skills" aria-labelledby="skills-label">
       <div class="container">
         <div class="page-grid section-grid section-grid--ruled">
-          <p class="section-label t-label" id="skills-label"><span class="section-label__index">04</span><span class="section-label__name">Skills</span></p>
+          <p class="section-label t-label" id="skills-label"><span class="section-label__name">Skills</span></p>
           <div class="section-main">
             <div class="section-heading">
               <h2 class="t-statement">Skills, equipment and systems.</h2>
@@ -478,32 +495,32 @@
               <!-- Equipment and processes, plant by plant -->
               <div class="block">
                 <div class="block__header t-label">
-                  <h3 class="block__title t-label"><span class="is-accent">Equipment and processes</span></h3>
+                  <h3 class="block__title t-label">Equipment and processes</h3>
                   <span class="is-secondary">Plant by plant</span>
                 </div>
                 <ul class="equip-rows">
                   <li class="equip-row">
-                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Continuous dairy</span><span class="equip-row__where t-mono">Agropur</span></span>
+                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Continuous dairy</span><span class="equip-row__where t-meta">Agropur</span></span>
                     <span class="logo logo--photo"><img src="assets/logos/agropur.png" alt="" width="44" height="44"></span>
                     <ul class="tags t-body"><li>Tanker receiving</li><li>Silos</li><li>Separators</li><li>Pumps and product routing</li><li>HTST pasteurization</li><li>Bulk starter room</li><li>Cheese vats and tables</li><li>EFVs and ACVs</li><li>Packaging</li><li>CIP circuits</li><li>Antibiotic test analyzer</li></ul>
                   </li>
                   <li class="equip-row">
-                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">High-volume cereal</span><span class="equip-row__where t-mono">Post Consumer Brands</span></span>
+                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">High-volume cereal</span><span class="equip-row__where t-meta">Post Consumer Brands</span></span>
                     <span class="logo logo--photo"><img src="assets/logos/post-consumer-brands.png" alt="" width="44" height="44"></span>
                     <ul class="tags t-body"><li>Feeders</li><li>Flaking mills and mill rolls</li><li>Jet zones</li><li>Dryers</li><li>Slurry and coating systems</li><li>Puffing guns</li><li>Extruders</li><li>Shredded-wheat equipment</li></ul>
                   </li>
                   <li class="equip-row">
-                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Custom meat</span><span class="equip-row__where t-mono">Herda’s Meat Processing</span></span>
+                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Custom meat</span><span class="equip-row__where t-meta">Herda’s Meat Processing</span></span>
                     <span class="logo logo--photo logo--dark"><img src="assets/logos/herdas-meat-processing.svg" alt="" width="44" height="44"></span>
                     <ul class="tags t-body"><li>Knives and sharpening</li><li>Saws</li><li>Grinding</li><li>Sausage production</li><li>Aging</li><li>Curing and smoking</li><li>Packaging and labeling</li></ul>
                   </li>
                   <li class="equip-row">
-                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Dry-food powders</span><span class="equip-row__where t-mono">Innovative Food Processors</span></span>
+                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Dry-food powders</span><span class="equip-row__where t-meta">Innovative Food Processors</span></span>
                     <span class="logo logo--photo"><img src="assets/logos/innovative-food-processors.png" alt="" width="44" height="44"></span>
                     <ul class="tags t-body"><li>Powder-processing equipment</li><li>Setup and cleaning</li><li>Production-order calculations</li><li>Yield calculations</li><li>Raw-material handling</li></ul>
                   </li>
                   <li class="equip-row">
-                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Distribution</span><span class="equip-row__where t-mono">McLane</span></span>
+                    <span class="equip-row__label"><span class="equip-row__kind t-body-large">Distribution</span><span class="equip-row__where t-meta">McLane</span></span>
                     <span class="logo logo--mclane"><span class="logo__clip"><img src="assets/logos/mclane.svg" alt=""></span></span>
                     <ul class="tags t-body"><li>Label scanning</li><li>Powered material handling</li><li>Pallet building</li><li>Dock staging</li></ul>
                   </li>
@@ -513,7 +530,7 @@
               <!-- Systems and safety -->
               <div class="block">
                 <div class="block__header t-label">
-                  <h3 class="block__title t-label"><span class="is-accent">Systems and safety</span></h3>
+                  <h3 class="block__title t-label">Systems and safety</h3>
                   <span class="is-secondary">Operator-level use</span>
                 </div>
                 <ul class="sys-rows">
@@ -532,7 +549,7 @@
                   <li class="sys-row">
                     <span class="sys-row__category t-label">Safety</span>
                     <span class="icon icon--shield-check"><img src="assets/icons/shield-check.svg" alt=""></span>
-                    <span class="sys-row__systems t-body-large">Lockout/tagout · Confined space · GMP</span>
+                    <span class="sys-row__systems t-body-large">Lockout/tagout, confined space, GMP</span>
                     <span class="sys-row__note t-body">At Agropur and Post.</span>
                   </li>
                 </ul>
@@ -543,17 +560,17 @@
       </div>
     </section>
 
-    <!-- 05 EDUCATION AND CERTIFICATION (light) -->
+    <!-- EDUCATION AND CERTIFICATION (light) -->
     <section class="theme-light" id="education" aria-labelledby="education-label">
       <div class="container">
         <div class="page-grid section-grid">
-          <p class="section-label t-label" id="education-label"><span class="section-label__index">05</span><span class="section-label__name">Education</span></p>
+          <p class="section-label t-label" id="education-label"><span class="section-label__name">Education</span></p>
           <div class="section-main">
             <h2 class="t-statement">Education and certification.</h2>
             <div class="index-list">
               <div class="index-row index-row--static">
                 <div class="index-row__head">
-                  <span class="index-row__years"><span class="t-mono">Oct 2026 – Present</span><span class="tag t-label">In progress</span></span>
+                  <span class="index-row__years"><span class="t-meta">Oct 2026 – Present</span><span class="tag t-label">In progress</span></span>
                   <span class="logo logo--rasmussen"><span class="logo__clip"><img src="assets/logos/rasmussen-university.svg" alt=""></span></span>
                   <span class="index-row__main">
                     <span class="index-row__title t-heading" role="heading" aria-level="3">Rasmussen University</span>
@@ -566,7 +583,7 @@
               </div>
               <div class="index-row index-row--static">
                 <div class="index-row__head">
-                  <span class="index-row__years"><span class="t-mono">Earlier</span></span>
+                  <span class="index-row__years"><span class="t-meta">Earlier</span></span>
                   <span class="logo logo--photo"><img src="assets/logos/le-cordon-bleu.png" alt="" width="44" height="44"></span>
                   <span class="index-row__main">
                     <span class="index-row__title t-heading" role="heading" aria-level="3">Le Cordon Bleu</span>
@@ -574,13 +591,13 @@
                   </span>
                   <span class="index-row__side">
                     <span class="index-row__role t-body">A.S., Culinary Arts</span>
-                    <span class="index-row__location t-mono">Mendota Heights, Minnesota</span>
+                    <span class="index-row__location t-meta">Mendota Heights, Minnesota</span>
                   </span>
                 </div>
               </div>
               <div class="index-row index-row--static">
                 <div class="index-row__head">
-                  <span class="index-row__years"><span class="t-mono">Certification</span></span>
+                  <span class="index-row__years"><span class="t-meta">Certification</span></span>
                   <span class="logo logo--icon"><span class="icon icon--shield-check"><img src="assets/icons/shield-check.svg" alt=""></span></span>
                   <span class="index-row__main">
                     <span class="index-row__title t-heading" role="heading" aria-level="3">Industry Analyst</span>
@@ -593,7 +610,7 @@
               </div>
               <div class="index-row index-row--static">
                 <div class="index-row__head">
-                  <span class="index-row__years"><span class="t-mono">Certification</span></span>
+                  <span class="index-row__years"><span class="t-meta">Certification</span></span>
                   <span class="logo logo--icon"><span class="icon icon--shield-check"><img src="assets/icons/shield-check.svg" alt=""></span></span>
                   <span class="index-row__main">
                     <span class="index-row__title t-heading" role="heading" aria-level="3">Aseptic dairy sampling</span>
@@ -610,11 +627,11 @@
       </div>
     </section>
 
-    <!-- 06 CONTACT -->
+    <!-- CONTACT -->
     <section id="contact" aria-labelledby="contact-heading">
       <div class="container">
         <div class="page-grid section-grid">
-          <p class="section-label t-label"><span class="section-label__index">06</span><span class="section-label__name">Contact</span></p>
+          <p class="section-label t-label"><span class="section-label__name">Contact</span></p>
           <div class="section-main">
             <div class="contact">
               <div class="contact__intro">
@@ -630,12 +647,12 @@
                 <li class="contact__item">
                   <span class="icon icon--link"><img src="assets/icons/link.svg" alt=""></span>
                   <span class="contact__label t-label">Profile</span>
-                  <a class="text-link" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <span aria-hidden="true">↗</span></a>
+                  <a class="text-link" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
                 </li>
                 <li class="contact__item">
                   <span class="icon icon--file-text"><img src="assets/icons/file-text.svg" alt=""></span>
                   <span class="contact__label t-label">Résumé</span>
-                  <a class="text-link" href="assets/Andrew-Bokman-Resume.pdf">Download PDF <span aria-hidden="true">↗</span></a>
+                  <a class="text-link" href="assets/Andrew-Bokman-Resume.pdf">Download PDF <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
                 </li>
               </ul>
             </div>
@@ -647,8 +664,8 @@
 
   <footer class="footer">
     <div class="container">
-      <div class="footer__inner t-mono">
-        <span>Andrew Bokman · Minnesota</span>
+      <div class="footer__inner t-meta">
+        <span>Andrew Bokman, Minnesota</span>
         <span>Updated October 2026</span>
       </div>
     </div>
