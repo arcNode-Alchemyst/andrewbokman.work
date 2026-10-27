@@ -46,10 +46,13 @@
 </head>
 <body>
   <!-- Icons (Lucide, ISC licence). Use one with <svg class="i"><use href="#i-out"/></svg>.
-       i-down: goes further down this page. i-out: opens a PDF or another site. -->
+       i-down: goes further down this page. i-out: opens a PDF or another site.
+       i-file and i-profile sit on the key caps and say what the key opens. -->
   <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
     <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
     <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+    <symbol id="i-profile" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
   </svg>
 
   <a class="skip-link t-body" href="#main">Skip to content</a>
@@ -89,8 +92,16 @@
     </div>
     <div class="menu__bottom">
       <p class="menu__actions">
-        <a class="btn btn--secondary btn--small" href="assets/Andrew-Bokman-Resume.pdf">Résumé <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
-        <a class="btn btn--secondary btn--small" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="key" href="assets/Andrew-Bokman-Resume.pdf">
+          <span class="key__cap" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg></span>
+          <span class="key__label"><span class="key__title">Résumé</span><span class="key__meta">1-page PDF</span></span>
+          <svg class="i i--out key__out" aria-hidden="true"><use href="#i-out"/></svg>
+        </a>
+        <a class="key" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">
+          <span class="key__cap" aria-hidden="true"><svg class="i"><use href="#i-profile"/></svg></span>
+          <span class="key__label"><span class="key__title">LinkedIn</span><span class="key__meta">Full profile</span></span>
+          <svg class="i i--out key__out" aria-hidden="true"><use href="#i-out"/></svg>
+        </a>
       </p>
       <a class="text-link t-meta is-secondary" href="mailto:a_bokman@proton.me">a_bokman@proton.me</a>
     </div>
@@ -108,10 +119,23 @@
               <p class="hero__statement t-statement">15+ years in food manufacturing and process operations across continuous, batch and multi-⁠line production.</p>
               <p class="hero__summary t-body-large is-secondary">Experienced in leading day-to-day production, troubleshooting abnormal conditions and training operators.</p>
             </div>
+            <!-- Control keys: a raised cap that says what the key is, set proud of a bar that
+                 names it. The main action is the lit blue key. -->
             <p class="hero__actions">
-              <a class="btn btn--primary" href="#experience">View experience <svg class="i i--down" aria-hidden="true"><use href="#i-down"/></svg></a>
-              <a class="btn btn--secondary" href="assets/Andrew-Bokman-Resume.pdf">Résumé <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
-              <a class="btn btn--secondary" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">LinkedIn <svg class="i i--out" aria-hidden="true"><use href="#i-out"/></svg></a>
+              <a class="key key--primary" href="#experience">
+                <span class="key__cap" aria-hidden="true"><svg class="i i--down"><use href="#i-down"/></svg></span>
+                <span class="key__label"><span class="key__title">View experience</span><span class="key__meta">8 roles since 2006</span></span>
+              </a>
+              <a class="key" href="assets/Andrew-Bokman-Resume.pdf">
+                <span class="key__cap" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg></span>
+                <span class="key__label"><span class="key__title">Résumé</span><span class="key__meta">1-page PDF</span></span>
+                <svg class="i i--out key__out" aria-hidden="true"><use href="#i-out"/></svg>
+              </a>
+              <a class="key" href="https://www.linkedin.com/in/andrew-bokman-15a90b441/">
+                <span class="key__cap" aria-hidden="true"><svg class="i"><use href="#i-profile"/></svg></span>
+                <span class="key__label"><span class="key__title">LinkedIn</span><span class="key__meta">Full profile</span></span>
+                <svg class="i i--out key__out" aria-hidden="true"><use href="#i-out"/></svg>
+              </a>
             </p>
           </div>
 

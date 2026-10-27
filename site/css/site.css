@@ -367,9 +367,182 @@ button.text-link::after,
 }
 
 /* Buttons --------------------------------------------------------------------
-   Rounded because they can be pressed. One filled button per group for the main
-   action; quiet filled-glass buttons for the actions beside it. The icon names
-   where the button goes: down the page, or out to a PDF or another site. */
+   Rounded because they can be pressed. Two kinds:
+     .key   the hero's control keys (and the menu's): a raised cap that says what
+            the key is, set proud of a bar that names it, pressing down like a real
+            push-button. The main action is the lit blue key.
+     .btn   small quiet controls: the header Résumé, Menu, Close, Open all roles.
+   An arrow icon names where a control goes: down the page, or out to a PDF or
+   another site. */
+
+.key {
+  --key-height: 58px;
+  --key-cap: 66px;
+  --key-overhang: calc((var(--key-cap) - var(--key-height)) / 2);
+  --key-bar: linear-gradient(180deg, #202730, #191f27);
+  --key-edge: rgb(232 236 240 / 0.1);
+  --key-text: var(--steel-50);
+  --key-meta: var(--steel-300);
+  --key-cap-bg: linear-gradient(180deg, #2c343f, #1d232b);
+  --key-cap-ink: var(--flow-300);
+  --key-cap-shine: rgb(255 255 255 / 0.16);
+  --key-cap-lip: rgb(0 0 0 / 0.35);
+  --key-glow: rgb(143 165 255 / 0.7);
+  position: relative;
+  display: inline-flex;
+  gap: 14px;
+  align-items: center;
+  min-height: var(--key-height);
+  margin-block: var(--key-overhang);
+  padding: 0 18px 0 0;
+  border-radius: 14px;
+  background: var(--key-bar);
+  color: var(--key-text);
+  text-align: left;
+  box-shadow:
+    inset 0 0 0 1px var(--key-edge),
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 1px 0 rgb(0 0 0 / 0.55),
+    0 14px 26px -14px rgb(0 0 0 / 0.85);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 140ms var(--ease-out),
+    box-shadow 140ms var(--ease-out),
+    filter var(--duration-fast) ease;
+}
+
+/* The cap: a little taller than the bar, so it stands proud of it. A highlight on its
+   top edge and a darker lip on its bottom give it thickness. */
+.key__cap {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--key-cap);
+  height: var(--key-cap);
+  margin-block: calc(-1 * var(--key-overhang));
+  border-radius: 16px;
+  background: var(--key-cap-bg);
+  color: var(--key-cap-ink);
+  box-shadow:
+    inset 0 0 0 1px var(--key-edge),
+    inset 0 1px 0 var(--key-cap-shine),
+    inset 0 -3px 0 var(--key-cap-lip),
+    0 2px 0 rgb(0 0 0 / 0.4),
+    0 10px 18px -8px rgb(0 0 0 / 0.7);
+  transition:
+    box-shadow 140ms var(--ease-out),
+    filter var(--duration-base) ease;
+}
+
+.key__cap .i {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.9;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    filter var(--duration-base) ease;
+}
+
+.key__label {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.key__title {
+  font-size: 16px;
+  font-weight: var(--weight-semibold);
+  line-height: 1.1;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+}
+
+.key__meta {
+  color: var(--key-meta);
+  font-size: 13px;
+  font-stretch: var(--stretch-label);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* The small arrow at the end of a key that leaves the page. */
+.key__out {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  padding-left: 2px;
+  color: var(--key-meta);
+}
+
+/* The lit key: a blue bar with a cyan glint at its far end (the same flow colours as
+   the progression line), and a white cap with a blue glyph. */
+.key--primary {
+  --key-bar:
+    radial-gradient(70% 140% at 100% 0%, rgb(69 200 242 / 0.5), transparent 60%),
+    linear-gradient(90deg, #2346e8, #2f55f5);
+  --key-edge: rgb(255 255 255 / 0.16);
+  --key-text: var(--white);
+  --key-meta: rgb(255 255 255 / 0.88);
+  --key-cap-bg: linear-gradient(180deg, #ffffff, #dde4ec);
+  --key-cap-ink: var(--flow-blue-deep);
+  --key-cap-shine: rgb(255 255 255 / 1);
+  --key-cap-lip: rgb(18 22 27 / 0.16);
+  --key-glow: rgb(35 70 232 / 0.35);
+  box-shadow:
+    inset 0 0 0 1px var(--key-edge),
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    0 1px 0 rgb(0 0 0 / 0.5),
+    0 16px 30px -14px rgb(47 85 245 / 0.75);
+}
+
+/* A light sweep across the lit key's bar: once as the page opens, then on hover. */
+.key--primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.26) 50%, transparent 70%) no-repeat;
+  background-size: 60% 100%;
+  background-position: -120% 0;
+  pointer-events: none;
+}
+
+/* Pressed: the whole key travels down 2px and the cap's lip shortens, like a real
+   push-button. */
+.key:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 0 0 1px var(--key-edge),
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 0 0 rgb(0 0 0 / 0.55),
+    0 6px 14px -10px rgb(0 0 0 / 0.85);
+}
+
+.key:active .key__cap {
+  box-shadow:
+    inset 0 0 0 1px var(--key-edge),
+    inset 0 1px 0 var(--key-cap-shine),
+    inset 0 -1px 0 var(--key-cap-lip),
+    0 1px 0 rgb(0 0 0 / 0.4),
+    0 4px 10px -6px rgb(0 0 0 / 0.7);
+}
+
+.key:active .key__cap .i {
+  filter: drop-shadow(0 0 6px var(--key-glow));
+}
+
+.key:focus-visible {
+  outline-offset: 5px;
+}
+
 .btn {
   display: inline-flex;
   gap: 10px;
@@ -400,11 +573,6 @@ button.text-link::after,
 
 .btn:active {
   transform: scale(0.98);
-}
-
-.btn--primary {
-  background: var(--color-bg-inverse);
-  color: var(--color-text-inverse);
 }
 
 .btn--secondary {
@@ -444,21 +612,33 @@ button.text-link::after,
     text-decoration-color: var(--color-border-accent);
   }
 
-  .btn--primary:hover {
-    background: var(--color-bg-inverse-hover);
-  }
-
   .btn--secondary:hover {
     background: var(--color-bg-control-hover);
     border-color: var(--color-border-ink);
   }
 
-  .btn:hover .i--down,
-  .text-link:hover .i--down {
+  /* Keys rise a pixel and their cap lights up. */
+  .key:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+
+  .key:hover:active {
     transform: translateY(2px);
   }
 
+  .key:hover .key__cap .i {
+    filter: drop-shadow(0 0 8px var(--key-glow));
+  }
+
+  .btn:hover .i--down,
+  .key:hover .i--down,
+  .text-link:hover .i--down {
+    transform: translateY(3px);
+  }
+
   .btn:hover .i--out,
+  .key:hover .i--out,
   .text-link:hover .i--out {
     transform: translate(2px, -2px);
   }
@@ -723,8 +903,17 @@ button.text-link::after,
 }
 
 .menu__actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--spacing-sm);
+  justify-self: stretch;
+}
+
+.menu__actions .key {
+  --key-height: 54px;
+  --key-cap: 60px;
+  gap: 12px;
+  padding-right: 14px;
 }
 
 /* Hero -------------------------------------------------------------------- */
@@ -793,24 +982,28 @@ button.text-link::after,
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xs) var(--spacing-md);
   align-items: center;
 }
 
-/* On a phone the main button takes the full width and the two others split the row
-   below it evenly, so all three edges line up with the text above. */
+/* On a phone the main key takes the full width and the two others split the row
+   below it evenly, so all three edges line up with the text above. The keys are a
+   little smaller so two fit side by side. */
 @container hero-text (max-width: 479px) {
   .hero__actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-xs) var(--spacing-sm);
   }
 
-  .hero__actions .btn {
-    min-height: 48px;
-    padding-inline: var(--spacing-md);
+  .hero__actions .key {
+    --key-height: 54px;
+    --key-cap: 60px;
+    gap: 12px;
+    padding-right: 14px;
   }
 
-  .hero__actions .btn--primary {
+  .hero__actions .key--primary {
     grid-column: 1 / -1;
   }
 }
@@ -1976,8 +2169,9 @@ button.text-link::after,
      2. The flow: when the progression comes into view (after the opening, on a wide
         screen), the line fills stage by stage from 2006 to today, each ring lights
         as the flow reaches it, and the current stage starts its slow pulse.
-   Everything else moves only in answer to a tap or a pointer: buttons press,
-   icons nudge, a role opens, the menu opens.
+   Everything else moves only in answer to a tap or a pointer: keys press down and
+   light their cap, icons nudge, a role opens, the menu opens. The one exception is
+   a single light sweep across the main key at the end of the opening.
    All of it is skipped when the device asks for reduced motion, and none of it
    hides content: without JavaScript the line is simply drawn in full. */
 
@@ -2025,6 +2219,27 @@ button.text-link::after,
     from {
       opacity: 0;
       transform: translateY(-6px);
+    }
+  }
+
+  /* Two names for one sweep, so the hover sweep can restart after the opening one. */
+  @keyframes sheen {
+    from { background-position: -120% 0; }
+    to { background-position: 220% 0; }
+  }
+
+  @keyframes sheen-again {
+    from { background-position: -120% 0; }
+    to { background-position: 220% 0; }
+  }
+
+  .key--primary::before {
+    animation: sheen 1200ms var(--ease-in-out) 1000ms both;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .key--primary:hover::before {
+      animation: sheen-again 900ms var(--ease-in-out) both;
     }
   }
 

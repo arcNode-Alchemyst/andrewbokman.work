@@ -9,6 +9,10 @@
   // Tells the inline script in <head> that this file ran (see the progression flow below).
   window.siteScriptReady = true;
 
+  // iPhone Safari only shows :active (the keys pressing down) once the page listens
+  // for touches. The listener does nothing else.
+  document.addEventListener('touchstart', function () {}, { passive: true });
+
   // Mobile menu: a native <dialog>, so focus trapping and Escape come for free.
   var menu = document.getElementById('menu');
   var openButton = document.querySelector('.header__menu-button');

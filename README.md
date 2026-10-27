@@ -52,6 +52,11 @@ the logos and icons end on the same line and the names, bullets, details and tag
   tabular figures so they line up.
 - **Rounded means pressable.** Buttons and the open/close controls have a small radius; panels, tags and logo
   tiles are square.
+- **Control keys.** The hero's three actions (and the two in the phone menu) are built like push-buttons on a
+  control panel: a raised cap with an icon that says what the key is, set slightly proud of a bar that names it
+  in two lines. They lift and light their cap on hover, and travel down 2px when pressed. The main action is the
+  lit blue key; a light sweeps across it once as the page opens. To add one, copy an `<a class="key">` block in
+  `index.html`. The smaller header and list controls use the quieter `.btn`.
 - **Icons say where a button goes.** A down arrow goes further down the page; an up-right arrow opens the PDF or
   another site. Nothing else gets an arrow.
 - **One moment of motion.** On load the hero rises in and the panel's flow line draws across; then the progression
