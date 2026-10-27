@@ -1,9 +1,17 @@
 // Small enhancements. The page reads and works without this file,
 // except for the mobile menu, which falls back to showing the links,
 // and the "Open all roles" button, which is hidden without it.
+// Without it the progression line is shown fully drawn instead of flowing in.
 
 (function () {
   'use strict';
+
+  // Tells the inline script in <head> that this file ran (see the progression flow below).
+  window.siteScriptReady = true;
+
+  // iPhone Safari only shows :active (the keys pressing down) once the page listens
+  // for touches. The listener does nothing else.
+  document.addEventListener('touchstart', function () {}, { passive: true });
 
   // Mobile menu: a native <dialog>, so focus trapping and Escape come for free.
   var menu = document.getElementById('menu');
@@ -113,27 +121,29 @@
     });
   });
 
-  // Highlight blocks wipe in once, the first time they are seen.
-  var highlights = Array.prototype.slice.call(document.querySelectorAll('.highlight'));
+  // Progression: the flow line fills once, the first time the stages are seen.
+  // The inline script in <head> empties the line (class "js-flow") only when the device
+  // allows motion. The flow waits for the opening sequence to finish, so on a wide screen
+  // (where the stages are visible straight away) the two read as one movement.
+  var root = document.documentElement;
+  var stages = document.querySelector('.stages');
 
-  if ('IntersectionObserver' in window) {
-    var highlightObserver = new IntersectionObserver(
+  if (!stages) root.classList.remove('js-flow');
+
+  if (stages && root.classList.contains('js-flow')) {
+    var openingEnds = Date.now() + 1100;
+
+    var flowObserver = new IntersectionObserver(
       function (entries, observer) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-in');
-          observer.unobserve(entry.target);
-        });
+        if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+        observer.disconnect();
+        window.setTimeout(function () {
+          stages.classList.add('is-flowing');
+        }, Math.max(0, openingEnds - Date.now()));
       },
-      { threshold: 0.6 }
+      { threshold: 0.25 }
     );
 
-    highlights.forEach(function (highlight) {
-      highlightObserver.observe(highlight);
-    });
-  } else {
-    highlights.forEach(function (highlight) {
-      highlight.classList.add('is-in');
-    });
+    flowObserver.observe(stages);
   }
 })();

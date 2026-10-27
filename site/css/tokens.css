@@ -1,49 +1,75 @@
 /*
-  Design tokens. Colour names match the variables in the Figma file
-  ("Andrew Bokman — Website", Foundations page), so a value changed
-  there can be changed here by the same name.
+  Design tokens.
+
+  The idea behind them: the page is designed like a modern control-room
+  screen. Grey is normal; colour means live. Steel greys carry almost
+  everything, and the blue "flow" colours are kept for what is current
+  (the present role, the running stage, links and focus) and for the one
+  line that carries the career forward.
+
+  Two shape rules: anything you can press has a small radius
+  (--radius-control); everything else (panels, tags, logo tiles) is square.
 
   Layout and type sizes are fluid: each grows smoothly with the window
-  between a phone value and the 1440 desktop design value, instead of
-  jumping at breakpoints. The two page-level breakpoints are listed at
-  the bottom of this file for reference.
+  between a phone value and the 1440 desktop value, instead of jumping at
+  breakpoints. The two page-level breakpoints are listed at the bottom.
+
+  The Figma file "Andrew Bokman — Website" still holds the earlier
+  IBM Plex / near-black design; these values replace it (October 2026).
 */
+
+/* Archivo (SIL Open Font License, see assets/fonts/OFL.txt), self-hosted.
+   One variable file covers every weight (100–900) and width (62–125%). */
+@font-face {
+  font-family: "Archivo";
+  src: url("../assets/fonts/archivo-variable-latin.woff2") format("woff2-variations"),
+       url("../assets/fonts/archivo-variable-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Primitives: raw values. Use the semantic tokens below in components. */
-  --neutral-0: #ffffff;
-  --neutral-50: #f4f3ee;
-  --neutral-400: #a3a39c;
-  --neutral-500: #85857e;
-  --neutral-900: #17181b;
-  --neutral-950: #0b0c0e;
-  --blue-50: #edf6ff;
-  --blue-300: #7c96ff;
-  --blue-500: #0f3dff;
-  --slate-600: #526077;
-  --slate-700: #3f4c61;
-  --alpha-light-20: rgb(244 243 238 / 0.2);
-  --alpha-light-48: rgb(244 243 238 / 0.48);
-  --alpha-dark-20: rgb(11 12 14 / 0.2);
-  --alpha-dark-48: rgb(11 12 14 / 0.48);
+  --white: #ffffff;
+  --steel-50: #e8ecf0;
+  --steel-300: #a3adb8;
+  --steel-400: #86919d;
+  --steel-600: #556171;
+  --steel-700: #3d4857;
+  --graphite-900: #181d24;
+  --graphite-950: #12161b;
+  --mist-50: #edf1f5;
+  --flow-cyan: #45c8f2;
+  --flow-azure: #3c93fb;
+  --flow-blue: #3a62ff;
+  --flow-blue-deep: #2346e8;
+  --flow-300: #8fa5ff;
+  --flow-gradient: linear-gradient(90deg, var(--flow-cyan), var(--flow-blue));
 
-  /* Semantic colour, Dark mode (the default ground). */
-  --color-bg-ground: var(--neutral-950);
-  --color-bg-inverse: var(--neutral-50);
-  --color-bg-accent: var(--blue-500);
-  --color-bg-subtle: var(--neutral-900);
-  --color-bg-logo: var(--neutral-0);
-  --color-text-primary: var(--neutral-50);
-  --color-text-secondary: var(--neutral-400);
-  --color-text-tertiary: var(--neutral-500);
-  --color-text-inverse: var(--neutral-950);
-  --color-text-accent: var(--blue-300);
-  --color-text-on-accent: var(--neutral-0);
-  --color-border-default: var(--alpha-light-20);
-  --color-border-strong: var(--alpha-light-48);
-  --color-border-ink: var(--neutral-50);
-  --color-border-accent: var(--blue-300);
-  --color-icon-default: var(--blue-300);
+  /* Semantic colour, dark (the default ground). */
+  --color-bg-ground: var(--graphite-950);
+  --color-bg-raised: var(--graphite-900);
+  --color-bg-inverse: var(--steel-50);
+  --color-bg-inverse-hover: var(--white);
+  --color-bg-accent: var(--flow-blue);
+  --color-bg-logo: var(--white);
+  --color-bg-chip: rgb(232 236 240 / 0.06);
+  --color-bg-control: rgb(232 236 240 / 0.04);
+  --color-bg-control-hover: rgb(232 236 240 / 0.09);
+  --color-bg-live: rgb(58 98 255 / 0.16);
+  --color-text-primary: var(--steel-50);
+  --color-text-secondary: var(--steel-300);
+  --color-text-tertiary: var(--steel-400);
+  --color-text-inverse: var(--graphite-950);
+  --color-text-accent: var(--flow-300);
+  --color-text-on-accent: var(--white);
+  --color-border-default: rgb(232 236 240 / 0.11);
+  --color-border-strong: rgb(232 236 240 / 0.24);
+  --color-border-ink: var(--steel-50);
+  --color-border-accent: var(--flow-300);
+  --color-live: var(--flow-blue);
 
   /* Spacing scale: the same at every screen size. */
   --spacing-2xs: 4px;
@@ -57,8 +83,10 @@
   --spacing-4xl: 96px;
   --spacing-5xl: 144px;
   --radius-none: 0;
+  --radius-control: 8px;
   --radius-full: 999px;
   --border-width-hairline: 1px;
+  --line-flow: 2px;
 
   /* Vertical rhythm: the only gaps sections use between their parts. */
   --rhythm-item: var(--spacing-xs);     /* list item to list item */
@@ -73,47 +101,67 @@
   --layout-gutter: clamp(16px, 1.7vw, 24px);
   --layout-section: clamp(64px, 8.4vw, 120px);
 
+  /* Type. One family, Archivo, used at two widths: semi-condensed and heavy for the
+     name and other display lines (an equipment nameplate), normal width for reading. */
+  --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --stretch-display: 78%;
+  --stretch-label: 92%;
+  --weight-regular: 400;
+  --weight-medium: 520;
+  --weight-semibold: 600;
+  --weight-display: 680;
+
   /* Type sizes: phone value, fluid middle, 1440 design value. */
-  --typography-display-size: clamp(36px, max(min(11.3vw, 44px), 7.78vw), 112px);
+  --typography-display-size: clamp(64px, 8.6vw, 132px);
   --typography-statement-size: clamp(24px, 1.6vw + 17.5px, 40px);
-  --typography-heading-size: clamp(20px, 0.8vw + 16.5px, 28px);
+  --typography-heading-size: clamp(20px, 0.6vw + 17px, 26px);
   --typography-body-large-size: clamp(17px, 0.3vw + 15.8px, 20px);
   --typography-body-size: clamp(15px, 0.15vw + 14.4px, 16px);
-  --typography-mono-size: clamp(13px, 0.1vw + 12.5px, 14px);
-  --typography-label-size: clamp(11px, 0.12vw + 10.5px, 12px);
+  --typography-meta-size: clamp(13px, 0.1vw + 12.5px, 14px);
+  --typography-label-size: 13px;
 
   /* Reading measures. */
   --measure-body: 68ch;
-  --measure-statement: 34ch;
+  --measure-statement: 32ch;
 
-  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* Motion. Quick to answer a tap, slower only for the one opening sequence. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 160ms;
+  --duration-base: 260ms;
+  --duration-slow: 720ms;
+  --flow-step: 360ms;                   /* time for the flow to cross one stage */
 
   /*
     Page-level breakpoints (media queries cannot read custom properties,
     so these values are repeated in site.css):
       900px   section label moves into its own rail; full header navigation
-      1200px  hero figure moves beside the hero text
+      1200px  hero panel moves beside the hero text
     Everything inside a section responds to its own width with
     container queries instead.
   */
 }
 
-/* Semantic colour, Light mode. Put class="theme-light" on a section to make it a light band. */
+/* Semantic colour, light. Put class="theme-light" on a section to make it a light band. */
 .theme-light {
-  --color-bg-ground: var(--blue-50);
-  --color-bg-inverse: var(--neutral-950);
-  --color-bg-subtle: var(--neutral-0);
-  --color-text-primary: var(--neutral-950);
-  --color-text-secondary: var(--slate-700);
-  --color-text-tertiary: var(--slate-600);
-  --color-text-inverse: var(--neutral-50);
-  --color-text-accent: var(--blue-500);
-  --color-border-default: var(--alpha-dark-20);
-  --color-border-strong: var(--alpha-dark-48);
-  --color-border-ink: var(--neutral-950);
-  --color-border-accent: var(--blue-500);
-  --color-icon-default: var(--blue-500);
+  --color-bg-ground: var(--mist-50);
+  --color-bg-raised: var(--white);
+  --color-bg-inverse: var(--graphite-950);
+  --color-bg-inverse-hover: #000000;
+  --color-bg-chip: rgb(18 22 27 / 0.055);
+  --color-bg-control: rgb(18 22 27 / 0.03);
+  --color-bg-control-hover: rgb(18 22 27 / 0.07);
+  --color-bg-live: rgb(35 70 232 / 0.1);
+  --color-text-primary: var(--graphite-950);
+  --color-text-secondary: var(--steel-700);
+  --color-text-tertiary: var(--steel-600);
+  --color-text-inverse: var(--steel-50);
+  --color-text-accent: var(--flow-blue-deep);
+  --color-border-default: rgb(18 22 27 / 0.12);
+  --color-border-strong: rgb(18 22 27 / 0.3);
+  --color-border-ink: var(--graphite-950);
+  --color-border-accent: var(--flow-blue-deep);
+  --color-live: var(--flow-blue-deep);
   background: var(--color-bg-ground);
   color: var(--color-text-primary);
 }
